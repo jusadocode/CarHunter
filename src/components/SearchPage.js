@@ -64,7 +64,6 @@ const SearchPage = () => {
         setText(event.target.value);
     };
     return (
-
         <div >
             <div style={{ marginInline: 570 }} >
                 <Paper elevation={24} variant="outlined" sx={{ m: 1 }}>
@@ -265,7 +264,7 @@ const SearchPage = () => {
                 </CardActionArea>
             </Card> */}
 
-            < p > Rezultatai teikiami naudojantis
+            <p> Rezultatai teikiami naudojantis
                 < Link href="https://autoplius.lt/" underline="hover" target="_blank" rel="noopener" > autoplius.lt </Link >
                 bei
                 < Link href="https://autogidas.lt/" underline="hover" target="_blank" rel="noopener" > autogidas.lt </Link >

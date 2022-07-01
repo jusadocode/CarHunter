@@ -2,6 +2,7 @@ import Header from './components/Header';
 import './App.css'
 import SearchPage from './components/SearchPage';
 import { useEffect, useState } from 'react';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -9,7 +10,7 @@ function App() {
 
   useEffect(() => {
 
-    const words = ["drifting"]
+    const words = ["drifting, bmw, audi, supra"]
 
     const rand = Math.floor(Math.random() * words.length)
 
@@ -28,6 +29,7 @@ function App() {
       <div style={{ padding: '20px' }}>
         <img src={gifLinks} alt='gif' />
       </div>
+      <Footer />
     </div>
   );
 }

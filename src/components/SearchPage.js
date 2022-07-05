@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -12,6 +12,12 @@ const SearchPage = () => {
     const [advancedSearch, setadvancedSearch] = useState(false);
 
     const [searching, setSearching] = useState(false);
+
+    let autoplius_models = []
+    let autoplius_makes = []
+
+    const [usedChecked, setusedChecked] = useState(true);
+    const [newChecked, setnewChecked] = useState(true);
 
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
@@ -63,10 +69,57 @@ const SearchPage = () => {
     const handleText = (event) => {
         setText(event.target.value);
     };
+
+    const handleChangeUsedCheck = (event) => {
+
+        if (usedChecked && !newChecked)
+            setnewChecked(!newChecked)
+
+        setusedChecked(!usedChecked)
+
+    };
+
+    const handleChangeNewCheck = (event) => {
+
+        if (newChecked && !usedChecked)
+            setusedChecked(!usedChecked)
+
+        setnewChecked(!newChecked)
+
+    };
+
+    const getLocalModels = () => {
+
+        fetch('.data/raw_autoplius_models.json')
+            .then(data => {
+                const models = data.json()
+
+                autoplius_models = models
+            })
+            .catch(console.error())
+    }
+
+    const getLocalMakes = () => {
+
+        fetch('.data/raw_autoplius_makes.json')
+            .then(data => {
+                const res = data.json()
+
+                autoplius_makes = res.makes
+            })
+            .catch(console.error())
+    }
+
+    useEffect(() => {
+
+        getLocalModels()
+
+    }, [])
+
     return (
-        <div >
-            <div style={{ marginInline: 570 }} >
-                <Paper elevation={24} variant="outlined" sx={{ m: 1 }}>
+        <div style={{ position: 'static' }}>
+            <div style={{ marginInline: 570, position: 'static' }} >
+                <Paper elevation={0} variant="outlined" sx={{ m: 1 }}>
                     <div>
                         <FormControl sx={{ m: 2, minWidth: 330 }} size="small">
                             <InputLabel id="demo-simple-select-standard-label">Markė</InputLabel>
@@ -80,9 +133,7 @@ const SearchPage = () => {
                                 <MenuItem value="">
                                     <em>None</em>
                                 </MenuItem>
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                <script type='text/javascript' src='./data/raw_autoplius_makes.html'></script>
                             </Select>
 
 
@@ -104,6 +155,12 @@ const SearchPage = () => {
                                 <MenuItem value={10}>Ten</MenuItem>
                                 <MenuItem value={20}>Twenty</MenuItem>
                                 <MenuItem value={30}>Thirty</MenuItem>
+
+                                {
+                                    autoplius_makes.forEach(element => {
+                                        <MenuItem value={element.id}>{element.name}</MenuItem>
+                                    })
+                                }
                             </Select>
                         </FormControl>
 
@@ -236,8 +293,8 @@ const SearchPage = () => {
                             />
                         </FormControl>
 
-                        <FormControlLabel control={<Checkbox defaultChecked />} label="Naudoti" />
-                        <FormControlLabel control={<Checkbox defaultChecked />} label="Nauji" />
+                        <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeUsedCheck} checked={usedChecked} />} label="Naudoti" />
+                        <FormControlLabel control={<Checkbox defaultChecked onChange={handleChangeNewCheck} checked={newChecked} />} label="Nauji" />
 
                         <Button
                             //onClick={setSearching(!searching)}

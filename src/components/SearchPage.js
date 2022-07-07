@@ -1,26 +1,65 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, componentDidUpdate } from 'react'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { FormControlLabel, Checkbox, Link, Card, CardActionArea, Paper, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
+import { NoMealsRounded } from '@mui/icons-material';
+import JSONTools from '../helperTools/JSONTools';
 
 
 const SearchPage = () => {
 
-    const [advancedSearch, setadvancedSearch] = useState(false);
+    const [advancedSearch, setAdvancedSearch] = useState(false);
 
     const [searching, setSearching] = useState(false);
 
-    let autoplius_models = []
-    let autoplius_makes = []
+    const prices = [
+        150,
+        300,
+        500,
+        1000,
+        1500,
+        2000,
+        2500,
+        3000,
+        3500,
+        4000,
+        4500,
+        5000,
+        6000,
+        7000,
+        8000,
+        9000,
+        10000,
+        11000,
+        12000,
+        13000,
+        14000,
+        15000,
+        17500,
+        20000,
+        22500,
+        25000,
+        27500,
+        30000,
+        35000,
+        40000,
+        45000,
+        50000,
+        60000,]
 
-    const [usedChecked, setusedChecked] = useState(true);
-    const [newChecked, setnewChecked] = useState(true);
+
+    const [years, setYears] = useState([]);
+    const [fuelTypes, setFuelTypes] = useState([]);
+    const [bodyTypes, setBodyTypes] = useState([]);
 
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
+
+    const [makes, setMakes] = useState([])
+    const [models, setModels] = useState([])
 
     const [yearFrom, setYearFrom] = useState('');
     const [yearTo, setYearTo] = useState('');
@@ -33,13 +72,26 @@ const SearchPage = () => {
 
     const [text, setText] = useState('');
 
-    const handleChangeMake = (event) => {
-        setMake(event.target.value);
+    const [usedChecked, setusedChecked] = useState(true);
+    const [newChecked, setnewChecked] = useState(true);
 
-    };
+    const handleChangeMake = (event) => {
+
+        console.log(event.target.value)
+
+        const selectedMake = makes.find((item => item.id === event.target.value))
+
+        setMake(selectedMake)
+
+        setModels(selectedMake.models)
+
+    }
 
     const handleChangeModel = (event) => {
-        setModel(event.target.value);
+
+        const item = models.find((item) => item.id === event.target.value)
+        setModel(item)
+
     };
 
     const handleChangeYearFrom = (event) => {
@@ -88,31 +140,57 @@ const SearchPage = () => {
 
     };
 
-    const getLocalModels = () => {
 
-        fetch('.data/raw_autoplius_models.json')
-            .then(data => {
-                const models = data.json()
+    const getLocalMakes = async () => {
 
-                autoplius_models = models
-            })
-            .catch(console.error())
+        const res = await fetch('../data/autoplius_data.json')
+
+        const data = await res.json()
+
+        setMakes(data)
+
     }
 
-    const getLocalMakes = () => {
+    const getLocalYears = () => {
 
-        fetch('.data/raw_autoplius_makes.json')
-            .then(data => {
-                const res = data.json()
+        var years = [];
 
-                autoplius_makes = res.makes
-            })
-            .catch(console.error())
+        const currentYear = new Date().getFullYear();
+        for (let i = currentYear; i >= 1985; i--) {
+            years.push(i);
+        }
+        years.push(1980, 1970, 1950, 1900);
+
+        setYears(years)
+    }
+
+    const getLocalFuelTypes = async () => {
+
+        const data = await fetch('../data/autoplius_fuel.json')
+
+
+
+        const res = await data.json()
+        console.log(res)
+
+        setFuelTypes(res)
+    }
+
+    const getLocalBodies = async () => {
+
+        const data = await fetch('../data/autoplius_body.json')
+
+        const res = await data.json()
+
+        setBodyTypes(res)
     }
 
     useEffect(() => {
 
-        getLocalModels()
+        getLocalMakes()
+        getLocalYears()
+        getLocalFuelTypes()
+        getLocalBodies()
 
     }, [])
 
@@ -126,14 +204,13 @@ const SearchPage = () => {
                             <Select
                                 labelId="demo-simple-select-standard-label"
                                 id="demo-simple-select-standard"
-                                value={make}
+                                value={make.id}
                                 onChange={handleChangeMake}
                                 label="Markė"
                             >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <script type='text/javascript' src='./data/raw_autoplius_makes.html'></script>
+                                {
+                                    Array.from(makes).map(element => <MenuItem value={element.id}>{element.name}</MenuItem>)
+                                }
                             </Select>
 
 
@@ -145,22 +222,15 @@ const SearchPage = () => {
                             <Select
                                 labelId="demo-simple-select-standard-label"
                                 id="demo-simple-select-standard"
-                                value={model}
+                                value={model.id}
                                 onChange={handleChangeModel}
                                 label="Modelis"
                             >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
-
                                 {
-                                    autoplius_makes.forEach(element => {
-                                        <MenuItem value={element.id}>{element.name}</MenuItem>
-                                    })
+                                    models.map(element => <MenuItem value={element.id}>{element.name}</MenuItem>)
                                 }
+
+
                             </Select>
                         </FormControl>
 
@@ -173,12 +243,9 @@ const SearchPage = () => {
                                 onChange={handleChangeYearFrom}
                                 label="Metai nuo"
                             >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                {
+                                    years.map(element => <MenuItem value={element}>{element}</MenuItem>)
+                                }
                             </Select>
                         </FormControl>
 
@@ -191,31 +258,25 @@ const SearchPage = () => {
                                 onChange={handleChangeYearTo}
                                 label="Metai iki"
                             >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                {
+                                    years.map(element => <MenuItem value={element}>{element}</MenuItem>)
+                                }
                             </Select>
 
 
                         </FormControl>
                         <FormControl sx={{ m: 2, minWidth: 150 }} size="small">
-                            <InputLabel id="demo-simple-select-standard-label">Kaina nuo</InputLabel>
+                            <InputLabel id="demo-simple-select-standard-label">Kaina iki, €</InputLabel>
                             <Select
                                 labelId="demo-simple-select-standard-label"
                                 id="demo-simple-select-standard"
                                 value={priceFrom}
                                 onChange={handleChangePriceFrom}
-                                label="Kaina nuo"
+                                label="Kaina iki, €"
                             >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                {
+                                    prices.map(element => <MenuItem value={element}>{element}</MenuItem>)
+                                }
                             </Select>
 
 
@@ -223,20 +284,17 @@ const SearchPage = () => {
 
 
                         <FormControl sx={{ m: 2, minWidth: 150 }} size="small">
-                            <InputLabel id="demo-simple-select-standard-label">Kaina iki</InputLabel>
+                            <InputLabel id="demo-simple-select-standard-label">Kaina iki, €</InputLabel>
                             <Select
                                 labelId="demo-simple-select-standard-label"
                                 id="demo-simple-select-standard"
                                 value={priceTo}
                                 onChange={handleChangePriceTo}
-                                label="Kaina iki"
+                                label="Kaina iki, €"
                             >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                {
+                                    prices.map(element => <MenuItem value={element}>{element}</MenuItem>)
+                                }
                             </Select>
 
 
@@ -246,16 +304,13 @@ const SearchPage = () => {
                             <Select
                                 labelId="demo-simple-select-standard-label"
                                 id="demo-simple-select-standard"
-                                value={bodyType}
+                                value={bodyType.id}
                                 onChange={handleChangeBodyType}
                                 label="Kėbulo tipas"
                             >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                {
+                                    bodyTypes.map(element => <MenuItem value={element.id}>{element.name}</MenuItem>)
+                                }
                             </Select>
 
 
@@ -267,16 +322,13 @@ const SearchPage = () => {
                             <Select
                                 labelId="demo-simple-select-standard-label"
                                 id="demo-simple-select-standard"
-                                value={fuelType}
+                                value={fuelType.id}
                                 onChange={handleChangeFuelType}
                                 label="Kuro tipas"
                             >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                {
+                                    fuelTypes.map(element => <MenuItem value={element.id}>{element.name}</MenuItem>)
+                                }
                             </Select>
 
 

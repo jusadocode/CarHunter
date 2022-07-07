@@ -7,6 +7,7 @@ import cheerio from 'cheerio';
 import axios from 'axios';
 
 
+
 const corsPrefix = 'https://cors-anywhere.herokuapp.com/'
 
 
@@ -56,7 +57,7 @@ function App() {
 
     generateRandomGif()
 
-    parseSiteHtml()
+    //parseSiteHtml()
 
   }, [])
 

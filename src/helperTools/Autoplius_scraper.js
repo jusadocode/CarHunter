@@ -108,6 +108,7 @@ const Autoplius_scraper = async (vehicle) => {
         url = `https://autoplius.lt/skelbimai/naudoti-automobiliai`
     else {
         url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?
+        ${vehicle.offerTypes.length > 1 ? '' : `offerType=${vehicle.offerTypes[0]}`}
         make_id=${vehicle.make.id}&
         model_id=${vehicle.model.id}&
         make_date_from=${vehicle.yearFrom}&

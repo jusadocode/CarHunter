@@ -8,11 +8,13 @@ import { FormControlLabel, Checkbox, Link, Paper, TextField, CircularProgress, C
 import '../App.css'
 import { LoadingButton } from '@mui/lab';
 import Autoplius_scraper from '../helperTools/Autoplius_scraper';
+import { orange } from '@mui/material/colors';
+import { Box } from '@mui/system';
 
 
 const SearchPage = () => {
 
-
+    let searchTimer
 
     const [advancedSearch, setAdvancedSearch] = useState(false);
 
@@ -27,7 +29,7 @@ const SearchPage = () => {
     const [autopliusChecked, setAutopliusCheck] = useState(true);
     const [autogidasChecked, setAutogidasCheck] = useState(true);
 
-    const [searchSuccess, setsearchSuccess] = useState(false);
+    const [status, setStatus] = useState('');
 
     const prices = [
         150, 300, 500,
@@ -169,9 +171,9 @@ const SearchPage = () => {
         }
         setSearching(true)
 
-        handleSearchCircularProgress()
-
         initiateSearch()
+
+        handleSearchCircularProgress()
 
     }
 
@@ -236,6 +238,15 @@ const SearchPage = () => {
 
     const initiateSearch = async () => {
 
+        setStatus('scraping data..')
+        let offers = []
+
+        if (autopliusChecked)
+            offers.push(0)
+
+        if (autogidasChecked)
+            offers.push(1)
+
         const car = {
             make: make,
             model: model,
@@ -245,11 +256,30 @@ const SearchPage = () => {
             priceTo: priceTo,
             fuelTypes: selectedFuelTypes,
             bodyTypes: selectedBodyTypes,
+            used: usedChecked,
+            new: newChecked,
+            offerTypes: offers,
             textField: text
         }
 
 
+        // const timeout = async (ms) => {
+
+        //     return new Promise(resolve => setTimeout(resolve, ms));
+        // }
+        // const delay = async () => {
+
+        //     let text = ''
+        //     await timeout(5000)
+        //     text += 'a'
+
+        //     return text
+        // }
+
+        //const results = await delay()
+
         const results = await Autoplius_scraper(car)
+
 
         if (results) {
             setSearching(false)
@@ -261,6 +291,10 @@ const SearchPage = () => {
             setCooldownState(newCooldown)
 
             handleCooldownCircularProgress()
+
+            setCars(results)
+
+            setStatus('cooldown')
         }
 
 
@@ -268,36 +302,71 @@ const SearchPage = () => {
 
         //console.log(results[0])
 
-        setCars(results)
-
-
-
     }
+
+
     const handleSearchCircularProgress = () => {
 
-        const timer = setInterval(() => {
-            setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10))
+        searchTimer = setInterval(() => {
+
+            setProgress((prevState) => {
+
+                if (prevState >= 100) {
+                    return 0
+                }
+
+                else {
+                    console.log(searching)
+                    return prevState + 10
+
+                }
+
+
+            })
         }, 800);
 
 
-        return () => {
-            if (!searching)
-                clearInterval(timer)
-        }
+
+
     }
+
+
 
     const handleCooldownCircularProgress = () => {
 
+
+        clearInterval(searchTimer)
+
         const timer = setInterval(() => {
-            setCooldown((prevState) => (prevState.progress >= 100 ? inActiveCooldown : prevState.progress + 10))
-            console.log("UPDATED")
-        }, 3000);
+            setCooldown((prevState) => {
+                if (prevState.progress >= 100) {
+
+                    setStatus('Ready')
+                    clearInterval(timer)
+
+                    console.log(getLoading())
+
+                    const newCooldown = {
+                        active: false,
+                        progress: 0
+                    }
+
+                    return newCooldown
+
+                }
+                else {
+
+                    const newCooldown = {
+                        active: prevState,
+                        progress: prevState.progress + 5
+                    }
+
+                    return newCooldown
+                }
+            })
+        }, 1000)
 
 
-        return () => {
-            if (!cooldown.active)
-                clearInterval(timer)
-        }
     }
     useEffect(() => {
 
@@ -306,6 +375,8 @@ const SearchPage = () => {
         getLocalYears()
         getLocalFuelTypes()
         getLocalBodies()
+
+        console.log(getLoading())
 
 
     }, [])
@@ -321,6 +392,12 @@ const SearchPage = () => {
             },
         },
     };
+
+    const getLoading = () => {
+        if (cooldown.active || searching)
+            return true
+        return false
+    }
 
     return (
         <div style={{ position: 'static' }}>
@@ -502,23 +579,38 @@ const SearchPage = () => {
                             <LoadingButton
                                 onClick={handleSearchClick}
                                 variant="contained"
-                                loading={searching}
+                                loading={getLoading()}
                                 loadingIndicator={
-                                    <CircularProgress
-                                        variant="determinate"
-                                        sx={{
-                                            color: (theme) =>
-                                                theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
-                                        }}
-                                        size={20}
-                                        thickness={6}
-                                        value={searchProgress}
-                                    />
+                                    !cooldown.active ?
+                                        <CircularProgress
+                                            variant="determinate"
+                                            sx={{
+                                                color: (theme) =>
+                                                    theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800]
+                                            }}
+                                            size={20}
+                                            thickness={8}
+                                            value={searchProgress}
+                                        />
+                                        :
+                                        <CircularProgress
+                                            variant="determinate"
+                                            sx={{
+                                                color: '#ffc400'
+                                            }}
+                                            size={20}
+                                            thickness={8}
+                                            value={cooldown.progress}
+                                        />
                                     // TODO: change value based on fetching
                                 }
                             >
                                 Ieškoti
                             </LoadingButton>
+
+                            <Typography sx={{ fontSize: 15, marginTop: 1 }} color="text.secondary">
+                                {status}
+                            </Typography>
                         </FormControl>
 
                         {/* <FormControl sx={{ marginInline: 2, marginBlock: 1, minWidth: 10 }} size="small">

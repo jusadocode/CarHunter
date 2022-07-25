@@ -22,7 +22,7 @@ const Autoplius_scraper = async (vehicle) => {
 
             headline = `${searchTitle} " : " ${resultCount}`
 
-            console.log(headline)
+            //console.log(headline)
         })
 
 
@@ -36,10 +36,11 @@ const Autoplius_scraper = async (vehicle) => {
             const price = $(element).children('.announcement-body').children('.announcement-pricing-info').children('strong').text().trim()
 
             var parameters = $(element).children('.announcement-body').children('.announcement-parameters ').children('.bottom-aligner').children()
-            console.log(title + " " + parameters.length)
+            //console.log(title + " " + parameters.length)
 
             let date = ''
             let fuelType = ''
+            let bodyType = ''
             let gearBox = ''
             let power = ''
             let mileage = ''
@@ -55,6 +56,9 @@ const Autoplius_scraper = async (vehicle) => {
                         break
                     case 'Kuro tipas':
                         fuelType = value
+                        break
+                    case 'Kėbulo tipas':
+                        bodyType = value
                         break
                     case 'Pavarų dėžė':
                         gearBox = value
@@ -84,6 +88,7 @@ const Autoplius_scraper = async (vehicle) => {
                 image: image,
                 date: date,
                 fuelType: fuelType,
+                bodyType: bodyType,
                 gearBox: gearBox,
                 power: power,
                 mileage: mileage,
@@ -108,7 +113,7 @@ const Autoplius_scraper = async (vehicle) => {
         url = `https://autoplius.lt/skelbimai/naudoti-automobiliai`
     else {
         url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?
-        ${vehicle.offerTypes.length > 1 ? '' : `offerType=${vehicle.offerTypes[0]}`}
+        ${vehicle.offerTypes.length > 1 ? '' : `offerType=${vehicle.offerTypes[0].id}`}
         make_id=${vehicle.make.id}&
         model_id=${vehicle.model.id}&
         make_date_from=${vehicle.yearFrom}&

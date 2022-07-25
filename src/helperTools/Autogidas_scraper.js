@@ -15,66 +15,28 @@ const Autogidas_scraper = async (vehicle) => {
     const scrapeSiteForCars = (html) => {
         const $ = cheerio.load(html)
 
-        $('.search-list-title', html).each((index, element) => {
+        $('.all-items-block content-section', html).children('article').children('article').each((index, element) => {
 
-            const searchTitle = $(element).children('h1').children('.js-search-title').text().trim()
-            const resultCount = $(element).children('h1').children('.result-count').text()
+            const url = $(element).children('a').attr('href')
+            const image = $(element).children('.right').children('.image').children('img').attr('src')
+            const stars = $(element).children('.right').children('.description').children('.up').text()
+            const title = $(element).children('.right').children('.description').children('.item-title').text()
+            const price = $(element).children('.right').children('.description').children('.item-price').text()
 
-            headline = `${searchTitle} " : " ${resultCount}`
+            var parameters1 = $(element).children('.right').children('.description').children('item-description').children('primary').text().split(', ')
+            var parameters2 = $(element).children('.right').children('.description').children('item-description').children('secondary').text().split(', ')
 
-            console.log(headline)
-        })
+            // console.log(title + " " + parameters1)
 
-
-        $('.announcement-item', html).each((index, element) => {
-
-
-            const url = $(element).attr('href')
-            const image = $(element).children('.announcement-media').children('.announcement-photo').children('img').attr('data-src')
-            const stars = $(element).children('.announcement-body').children('.stars-badge').text().trim()
-            const title = $(element).children('.announcement-body').children('.announcement-title').text().trim()
-            const price = $(element).children('.announcement-body').children('.announcement-pricing-info').children('strong').text().trim()
-
-            var parameters = $(element).children('.announcement-body').children('.announcement-parameters ').children('.bottom-aligner').children()
-            console.log(title + " " + parameters.length)
-
-            let date = ''
-            let fuelType = ''
-            let gearBox = ''
-            let power = ''
-            let mileage = ''
-            let city = ''
-
-            parameters.each((index, elem) => {
-                const titleAttr = $(elem).attr('title')
-                const value = $(elem).text().trim()
-
-                switch (titleAttr) {
-                    case 'Pagaminimo data':
-                        date = value
-                        break
-                    case 'Kuro tipas':
-                        fuelType = value
-                        break
-                    case 'Pavarų dėžė':
-                        gearBox = value
-                        break
-                    case 'Galia':
-                        power = value
-                        break
-                    case 'Rida':
-                        mileage = value
-                        break
-                    case 'Miestas':
-                        city = value
-                        break
-                    default:
-                        break
-                }
+            let date = parameters1[2].slice(0, parameters1[2].length - 1).trim()
+            let fuelType = parameters1[1].trim()
+            let gearBox = parameters1[3].trim()
+            let power = parameters1[4].trim()
+            let mileage = parameters2[0].trim()
+            let bodyType = parameters2[1].trim()
+            let city = parameters2[2].trim()
 
 
-
-            })
 
             const car = {
                 title: title,
@@ -84,6 +46,7 @@ const Autogidas_scraper = async (vehicle) => {
                 image: image,
                 date: date,
                 fuelType: fuelType,
+                bodyType: bodyType,
                 gearBox: gearBox,
                 power: power,
                 mileage: mileage,
@@ -92,8 +55,16 @@ const Autogidas_scraper = async (vehicle) => {
 
             //console.log(car)
             cars.push(car)
+            // const searchTitle = $(element).children('h1').children('.js-search-title').text().trim()
+            // const resultCount = $(element).children('h1').children('.result-count').text()
 
+            // headline = `${searchTitle} " : " ${resultCount}`
+
+            // console.log(headline)
         })
+
+
+
 
     }
 
@@ -105,19 +76,22 @@ const Autogidas_scraper = async (vehicle) => {
     //body_type_id%5B4%5D=${vehicle.bodyType.id}&
 
     if (vehicle.make === '')
-        url = `https://autoplius.lt/skelbimai/naudoti-automobiliai`
+        url = `https://autogidas.lt/skelbimai/automobiliai/`
     else {
-        url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?
-        make_id=${vehicle.make.id}&
-        model_id=${vehicle.model.id}&
-        make_date_from=${vehicle.yearFrom}&
-        make_date_to=${vehicle.yearTo}&
-        sell_price_from=${vehicle.priceFrom}&
-        sell_price_to=${vehicle.priceTo}&
-        ${vehicle.fuelTypes.map((element => element))}&
-        ${vehicle.bodyTypes.map((element => element))}&
-        qt=${vehicle.textField}`
+        url = `https://autogidas.lt/skelbimai/automobiliai/?
+        ${vehicle.offerTypes.length > 1 ? '' : `f_434[]=${vehicle.offerTypes[0].name}&`}
+        f_1%5B0%5D=${vehicle.make.name}&
+        f_model_14%5B0%5D=${vehicle.model.name}&
+        f_215=${vehicle.priceFrom}&
+        f_216==${vehicle.priceTo}&
+        f_41==${vehicle.yearFrom}&
+        f_42=2020=${vehicle.yearTo}&
+        ${vehicle.bodyTypes.map((element, index) => `f_3%5B${index}%5D=${element}&`)}
+        ${vehicle.fuelTypes.map((element, index) => `f_2%5B${index}%5D=${element}&`)}
+        f_376=${vehicle.textField}`
     }
+
+    console.log(url)
 
     // }
     // else {

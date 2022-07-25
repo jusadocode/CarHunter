@@ -8,6 +8,7 @@ import { FormControlLabel, Checkbox, Link, Paper, TextField, CircularProgress, C
 import '../App.css'
 import { LoadingButton } from '@mui/lab';
 import Autoplius_scraper from '../helperTools/Autoplius_scraper';
+import Autogidas_scraper from '../helperTools/Autogidas_scraper';
 import { orange } from '@mui/material/colors';
 import { Box } from '@mui/system';
 
@@ -18,7 +19,8 @@ const SearchPage = () => {
 
     const [advancedSearch, setAdvancedSearch] = useState(false);
 
-    const [cars, setCars] = useState([])
+    const [autopliusCars, setAutopliusCars] = useState([])
+    const [autogidasCars, setAutogidasCars] = useState([])
 
     const [headline, setHeadline] = useState('')
 
@@ -166,7 +168,6 @@ const SearchPage = () => {
     const handleSearchClick = (event) => {
 
         if (cooldown.active) {
-            console.log("ON COOLDOWN, NO CLICK")
             return
         }
         setSearching(true)
@@ -241,11 +242,11 @@ const SearchPage = () => {
         setStatus('scraping data..')
         let offers = []
 
-        if (autopliusChecked)
-            offers.push(0)
+        if (usedChecked)
+            offers.push({ name: 'Naudotas', id: 0 })
 
-        if (autogidasChecked)
-            offers.push(1)
+        if (newChecked)
+            offers.push({ name: 'Naujas', id: 1 })
 
         const car = {
             make: make,
@@ -256,8 +257,6 @@ const SearchPage = () => {
             priceTo: priceTo,
             fuelTypes: selectedFuelTypes,
             bodyTypes: selectedBodyTypes,
-            used: usedChecked,
-            new: newChecked,
             offerTypes: offers,
             textField: text
         }
@@ -278,10 +277,15 @@ const SearchPage = () => {
 
         //const results = await delay()
 
-        const results = await Autoplius_scraper(car)
+        const autopliusResults = await Autoplius_scraper(car)
 
+        const autogidasResults = await Autogidas_scraper(car)
 
-        if (results) {
+        if (autopliusResults || autogidasResults) {
+
+            console.log(autopliusResults)
+            console.log(autogidasResults)
+
             setSearching(false)
 
             let newCooldown = inActiveCooldown
@@ -292,9 +296,16 @@ const SearchPage = () => {
 
             handleCooldownCircularProgress()
 
-            setCars(results)
-
             setStatus('cooldown')
+
+            if (autopliusResults) {
+                setAutopliusCars(autopliusCars)
+            }
+
+            if (autogidasResults) {
+                setAutogidasCars(autogidasCars)
+            }
+
         }
 
 
@@ -316,7 +327,6 @@ const SearchPage = () => {
                 }
 
                 else {
-                    console.log(searching)
                     return prevState + 10
 
                 }
@@ -343,8 +353,6 @@ const SearchPage = () => {
 
                     setStatus('Ready')
                     clearInterval(timer)
-
-                    console.log(getLoading())
 
                     const newCooldown = {
                         active: false,
@@ -375,8 +383,6 @@ const SearchPage = () => {
         getLocalYears()
         getLocalFuelTypes()
         getLocalBodies()
-
-        console.log(getLoading())
 
 
     }, [])
@@ -673,10 +679,10 @@ const SearchPage = () => {
                 < Link href="https://autogidas.lt/" underline="hover" target="_blank" rel="noopener" > autogidas.lt </Link >
             </p >
 
-            <div style={{ marginInline: 800, position: 'static' }} >
+            <div style={{ marginInline: 800, position: 'static', border: '2px black' }} >
                 { // research hover over
-                    cars.length > 0 ?
-                        cars.map(car => <Card sx={{ maxWidth: 345 }}>
+                    autopliusCars.length > 0 ?
+                        autopliusCars.map(car => <Card sx={{ maxWidth: 345 }}>
                             <CardActionArea href={car.url} target='_blank'>
                                 <CardContent>
                                     <CardMedia
@@ -699,6 +705,57 @@ const SearchPage = () => {
                                     </Typography>
                                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                                         {car.fuelType}
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                        {car.bodyType}
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                        {car.gearBox}
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                        {car.power}
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                        {car.mileage}
+                                    </Typography>
+
+
+                                </CardContent>
+
+                            </CardActionArea>
+                            <Button size="small" href={`https://www.google.com/maps/search/?api=1&query=${car.city}`} target='_blank'>{car.city}</Button>
+                        </Card>)
+
+                        : []
+                }
+                { // research hover over
+                    autogidasCars.length > 0 ?
+                        autogidasCars.map(car => <Card sx={{ maxWidth: 345 }}>
+                            <CardActionArea href={car.url} target='_blank'>
+                                <CardContent>
+                                    <CardMedia
+                                        component="img"
+                                        image={car.image}
+                                        alt={car.name}
+                                    />
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                        {car.title}
+                                    </Typography>
+                                    <Typography variant="h5" component="div">
+                                        {car.price}
+                                    </Typography>
+                                    <Typography variant="body2">
+                                        ⭐{car.stars}
+                                        <br />
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                        {car.date}
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                        {car.fuelType}
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                        {car.bodyType}
                                     </Typography>
                                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                                         {car.gearBox}

@@ -299,11 +299,11 @@ const SearchPage = () => {
             setStatus('cooldown')
 
             if (autopliusResults) {
-                setAutopliusCars(autopliusCars)
+                setAutopliusCars(autopliusResults)
             }
 
             if (autogidasResults) {
-                setAutogidasCars(autogidasCars)
+                setAutogidasCars(autogidasResults)
             }
 
         }
@@ -679,103 +679,108 @@ const SearchPage = () => {
                 < Link href="https://autogidas.lt/" underline="hover" target="_blank" rel="noopener" > autogidas.lt </Link >
             </p >
 
-            <div style={{ marginInline: 800, position: 'static', border: '2px black' }} >
-                { // research hover over
-                    autopliusCars.length > 0 ?
-                        autopliusCars.map(car => <Card sx={{ maxWidth: 345 }}>
-                            <CardActionArea href={car.url} target='_blank'>
-                                <CardContent>
-                                    <CardMedia
-                                        component="img"
-                                        image={car.image}
-                                        alt={car.name}
-                                    />
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        {car.title}
-                                    </Typography>
-                                    <Typography variant="h5" component="div">
-                                        {car.price}
-                                    </Typography>
-                                    <Typography variant="body2">
-                                        ⭐{car.stars}
-                                        <br />
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        {car.date}
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        {car.fuelType}
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        {car.bodyType}
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        {car.gearBox}
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        {car.power}
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        {car.mileage}
-                                    </Typography>
+            <div style={{ border: 'solid' }} >
+                <div style={{ maxWidth: 500, border: 'solid' }} >
+
+                    {  // research hover over
+                        autopliusCars.length > 0 ?
+                            autopliusCars.map(car => <Card sx={{ maxWidth: 345 }}>
+                                <CardActionArea href={car.url} target='_blank'>
+                                    <CardContent>
+                                        <CardMedia
+                                            component="img"
+                                            image={car.image}
+                                            alt={car.name}
+                                        />
+                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                            {car.title}
+                                        </Typography>
+                                        <Typography variant="h5" component="div">
+                                            {car.price}
+                                        </Typography>
+                                        <Typography variant="body2">
+                                            ⭐{car.stars}
+                                            <br />
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                            {car.date}
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                            {car.fuelType}
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                            {car.bodyType}
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                            {car.gearBox}
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                            {car.power}
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                            {car.mileage}
+                                        </Typography>
 
 
-                                </CardContent>
+                                    </CardContent>
 
-                            </CardActionArea>
-                            <Button size="small" href={`https://www.google.com/maps/search/?api=1&query=${car.city}`} target='_blank'>{car.city}</Button>
-                        </Card>)
+                                </CardActionArea>
+                                <Button size="small" href={`https://www.google.com/maps/search/?api=1&query=${car.city}`} target='_blank'>{car.city}</Button>
+                            </Card>)
 
-                        : []
-                }
-                { // research hover over
-                    autogidasCars.length > 0 ?
-                        autogidasCars.map(car => <Card sx={{ maxWidth: 345 }}>
-                            <CardActionArea href={car.url} target='_blank'>
-                                <CardContent>
-                                    <CardMedia
-                                        component="img"
-                                        image={car.image}
-                                        alt={car.name}
-                                    />
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        {car.title}
-                                    </Typography>
-                                    <Typography variant="h5" component="div">
-                                        {car.price}
-                                    </Typography>
-                                    <Typography variant="body2">
-                                        ⭐{car.stars}
-                                        <br />
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        {car.date}
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        {car.fuelType}
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        {car.bodyType}
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        {car.gearBox}
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        {car.power}
-                                    </Typography>
-                                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                        {car.mileage}
-                                    </Typography>
+                            : []
+                    }
+                </div>
+                <div style={{ maxWidth: 500, border: 'solid' }} >
+                    { // research hover over
+                        autogidasCars.length > 0 ?
+                            autogidasCars.map(car => <Card sx={{ maxWidth: 345 }}>
+                                <CardActionArea href={car.url} target='_blank'>
+                                    <CardContent>
+                                        <CardMedia
+                                            component="img"
+                                            image={car.image}
+                                            alt={car.name}
+                                        />
+                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                            {car.title}
+                                        </Typography>
+                                        <Typography variant="h5" component="div">
+                                            {car.price}
+                                        </Typography>
+                                        <Typography variant="body2">
+                                            ⭐{car.stars}
+                                            <br />
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                            {car.date}
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                            {car.fuelType}
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                            {car.bodyType}
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                            {car.gearBox}
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                            {car.power}
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                            {car.mileage}
+                                        </Typography>
 
 
-                                </CardContent>
+                                    </CardContent>
 
-                            </CardActionArea>
-                            <Button size="small" href={`https://www.google.com/maps/search/?api=1&query=${car.city}`} target='_blank'>{car.city}</Button>
-                        </Card>)
+                                </CardActionArea>
+                                <Button size="small" href={`https://www.google.com/maps/search/?api=1&query=${car.city}`} target='_blank'>{car.city}</Button>
+                            </Card>)
 
-                        : []
-                }
+                            : []
+                    }
+                </div>
             </div>
 
 

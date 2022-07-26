@@ -28,6 +28,8 @@ const SearchPage = () => {
 
     const [searching, setSearching] = useState(false);
 
+    let border = ''
+
     const [autopliusChecked, setAutopliusCheck] = useState(true);
     const [autogidasChecked, setAutogidasCheck] = useState(true);
 
@@ -684,7 +686,7 @@ const SearchPage = () => {
 
                     {  // research hover over
                         autopliusCars.length > 0 ?
-                            autopliusCars.map(car => <div><Card sx={{ maxWidth: 345, minHeight: 500 }}>
+                            autopliusCars.map((car, index) => <div><Card sx={{ maxWidth: 345, minHeight: 500 }}>
                                 <CardActionArea href={car.url} target='_blank'>
                                     <CardContent>
                                         <CardMedia sx={{ maxHeight: 300, maxWidth: 255, border: car.stars >= 10 ? '5px solid yellow' : '5px solid grey' }}
@@ -735,7 +737,7 @@ const SearchPage = () => {
                 <div>
                     { // research hover over
                         autogidasCars.length > 0 ?
-                            autogidasCars.map(car => <div><Card sx={{ maxWidth: 345, minHeight: 500 }}>
+                            autogidasCars.map((car, index) => <div><Card sx={{ maxWidth: 345, minHeight: 500 }}>
                                 <CardActionArea href={car.url} target='_blank'>
                                     <CardContent>
                                         <CardMedia sx={{ maxHeight: 300, maxWidth: 255, border: car.stars >= 10 ? '5px solid yellow' : '5px solid grey' }}

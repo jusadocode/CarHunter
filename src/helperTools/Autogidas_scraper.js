@@ -2694,21 +2694,8 @@ const Autogidas_scraper = async (vehicle) => {
 
     const scraperCall = async () => {
 
-        const parameters = {
-            browser: true,
-            cookies: '',
-            headers: {
-                "x-api-key": "dbcd5a71a3004a54bed04d4bf9d2a3f6",
-                "useQueryString": true
-            },
-            js_snippet: '',
-            proxy_type: 'datacenter',
-            proxy_country: 'FR',
-            wait_for_selector: '',
-            return_text: false
-        }
 
-        await client.scrape(url, parameters)
+        await client.scrape(url, { browser: false, proxy_country: 'IT' }) // IT, FR, DE, SA, UK, CZ
             .then(response => {
                 console.log(response)
                 scrapeSiteForCars(response.content)

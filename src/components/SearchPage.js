@@ -477,13 +477,13 @@ const SearchPage = () => {
 
                         </FormControl>
                         <FormControl sx={{ m: 2, minWidth: 150 }} size="small">
-                            <InputLabel id="demo-simple-select-standard-label">Kaina iki, €</InputLabel>
+                            <InputLabel id="demo-simple-select-standard-label">Kaina nuo, €</InputLabel>
                             <Select
                                 labelId="demo-simple-select-standard-label"
                                 id="demo-simple-select-standard"
                                 value={priceFrom}
                                 onChange={handleChangePriceFrom}
-                                label="Kaina iki, €"
+                                label="Kaina nuo, €"
                             >
                                 {
                                     prices.map(element => <MenuItem value={element}>{element}</MenuItem>)
@@ -679,12 +679,12 @@ const SearchPage = () => {
                 < Link href="https://autogidas.lt/" underline="hover" target="_blank" rel="noopener" > autogidas.lt </Link >
             </p >
 
-            <div style={{ marginInline: 650, display: 'flex', border: 'solid' }} >
+            <div style={{ marginInline: 650, display: 'flex' }} >
                 <div>
 
                     {  // research hover over
                         autopliusCars.length > 0 ?
-                            autopliusCars.map(car => <Card sx={{ maxWidth: 345, minHeight: 500 }}>
+                            autopliusCars.map(car => <div><Card sx={{ maxWidth: 345, minHeight: 500 }}>
                                 <CardActionArea href={car.url} target='_blank'>
                                     <CardContent>
                                         <CardMedia sx={{ maxHeight: 300, maxWidth: 255, border: car.stars >= 10 ? '5px solid yellow' : '5px solid grey' }}
@@ -726,7 +726,8 @@ const SearchPage = () => {
 
                                 </CardActionArea>
                                 <Button size="small" href={`https://www.google.com/maps/search/?api=1&query=${car.city}`} target='_blank'>{car.city}</Button>
-                            </Card>)
+                            </Card>
+                            </div>)
 
                             : []
                     }
@@ -734,7 +735,7 @@ const SearchPage = () => {
                 <div>
                     { // research hover over
                         autogidasCars.length > 0 ?
-                            autogidasCars.map(car => <Card sx={{ maxWidth: 345, minHeight: 500 }}>
+                            autogidasCars.map(car => <div><Card sx={{ maxWidth: 345, minHeight: 500 }}>
                                 <CardActionArea href={car.url} target='_blank'>
                                     <CardContent>
                                         <CardMedia sx={{ maxHeight: 300, maxWidth: 255, border: car.stars >= 10 ? '5px solid yellow' : '5px solid grey' }}
@@ -776,7 +777,8 @@ const SearchPage = () => {
 
                                 </CardActionArea>
                                 <Button size="small" href={`https://www.google.com/maps/search/?api=1&query=${car.city}`} target='_blank'>{car.city}</Button>
-                            </Card>)
+                            </Card>
+                            </div>)
 
                             : []
                     }

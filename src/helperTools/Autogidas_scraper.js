@@ -2589,7 +2589,9 @@ const Autogidas_scraper = async (vehicle) => {
             const url = `https://autogidas.lt${$(element).children('a').attr('href')}`
 
             //console.log(url)
-            const image = $(element).children('a').children('.right').children('.image').children('img').attr('src')
+            const image = $(element).children('a').children('.right').children('.image').children('img').attr('data-src')
+
+            console.log(image)
             const stars = $(element).children('a').children('.right').children('.description').children('.up').text().trim()
             const title = $(element).children('a').children('.right').children('.description').children('.item-title').text().trim()
             const price = $(element).children('a').children('.right').children('.description').children('.item-price').text().trim()
@@ -2626,7 +2628,7 @@ const Autogidas_scraper = async (vehicle) => {
                 city: city
             }
 
-            //console.log(car)
+            console.log(car)
             cars.push(car)
             // const searchTitle = $(element).children('h1').children('.js-search-title').text().trim()
             // const resultCount = $(element).children('h1').children('.result-count').text()

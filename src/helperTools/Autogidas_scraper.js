@@ -2607,7 +2607,7 @@ const Autogidas_scraper = async (vehicle) => {
             let power = parameters1[4] ? parameters1[4].trim() : ''
             let mileage = parameters2[0] ? parameters2[0].trim() : ''
             let bodyType = parameters2[1] ? parameters2[1].trim() : ''
-            let city = parameters2[2] ? parameters2[2].trim() : ''
+            let city = parameters2[2] ? parameters2[2].trim() : 'Nėra vietovės'
 
 
 
@@ -2648,7 +2648,7 @@ const Autogidas_scraper = async (vehicle) => {
     //fuel_id%5B32%5D=${vehicle.fuelType.id}&
     //body_type_id%5B4%5D=${vehicle.bodyType.id}&
 
-    if (vehicle.make === '')
+    if (vehicle.make.name === '')
         url = `https://autogidas.lt/skelbimai/automobiliai/`
     else {
         url = `https://autogidas.lt/skelbimai/automobiliai/?
@@ -2719,8 +2719,7 @@ const Autogidas_scraper = async (vehicle) => {
 
     // Scrape autoplius site.
 
-    //await scraperCall()
-    scrapeSiteForCars(html)
+    await scraperCall()
 
     return (
         cars

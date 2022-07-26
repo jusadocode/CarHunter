@@ -679,15 +679,15 @@ const SearchPage = () => {
                 < Link href="https://autogidas.lt/" underline="hover" target="_blank" rel="noopener" > autogidas.lt </Link >
             </p >
 
-            <div style={{ border: 'solid' }} >
-                <div style={{ maxWidth: 500, border: 'solid' }} >
+            <div style={{ marginInline: 650, display: 'flex', border: 'solid' }} >
+                <div>
 
                     {  // research hover over
                         autopliusCars.length > 0 ?
-                            autopliusCars.map(car => <Card sx={{ maxWidth: 345 }}>
+                            autopliusCars.map(car => <Card sx={{ maxWidth: 345, minHeight: 500 }}>
                                 <CardActionArea href={car.url} target='_blank'>
                                     <CardContent>
-                                        <CardMedia
+                                        <CardMedia sx={{ maxHeight: 300, maxWidth: 255, border: car.stars >= 10 ? '5px solid yellow' : '5px solid grey' }}
                                             component="img"
                                             image={car.image}
                                             alt={car.name}
@@ -731,13 +731,13 @@ const SearchPage = () => {
                             : []
                     }
                 </div>
-                <div style={{ maxWidth: 500, border: 'solid' }} >
+                <div>
                     { // research hover over
                         autogidasCars.length > 0 ?
-                            autogidasCars.map(car => <Card sx={{ maxWidth: 345 }}>
+                            autogidasCars.map(car => <Card sx={{ maxWidth: 345, minHeight: 500 }}>
                                 <CardActionArea href={car.url} target='_blank'>
                                     <CardContent>
-                                        <CardMedia
+                                        <CardMedia sx={{ maxHeight: 300, maxWidth: 255, border: car.stars >= 10 ? '5px solid yellow' : '5px solid grey' }}
                                             component="img"
                                             image={car.image}
                                             alt={car.name}

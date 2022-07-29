@@ -6,6 +6,7 @@ import ScrapingAntClient from '@scrapingant/scrapingant-client'
 
 const Autogidas_scraper = async (vehicle) => {
 
+
     let cars = []
 
     let headline = 'Automobilių nerasta'
@@ -2692,13 +2693,20 @@ const Autogidas_scraper = async (vehicle) => {
     //         })
     // }
 
+    let timer
+    let seconds = 0
+
     const scraperCall = async () => {
 
+        timer = setInterval(() => {
+            seconds++
+        }, 1000);
 
-        await client.scrape(url, { browser: false, proxy_country: 'IT' }) // IT, FR, DE, SA, UK, CZ
+        await client.scrape(url, { proxy_country: 'IT' }) // IT, FR, DE, SA, UK, CZ
             .then(response => {
                 console.log(response)
                 scrapeSiteForCars(response.content)
+                clearInterval(timer)
             })
             .catch(error => {
                 console.log(error)
@@ -2711,7 +2719,10 @@ const Autogidas_scraper = async (vehicle) => {
     await scraperCall()
 
     return (
-        cars
+        {
+            carList: cars,
+            requestTime: seconds
+        }
     )
 }
 

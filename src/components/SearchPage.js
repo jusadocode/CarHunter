@@ -279,9 +279,9 @@ const SearchPage = () => {
 
         //const results = await delay()
 
-        const autopliusResults = await Autoplius_scraper(car)
+        const autopliusResults = await Autoplius_scraper(car).carList
 
-        const autogidasResults = await Autogidas_scraper(car)
+        const autogidasResults = await Autogidas_scraper(car).carList
 
         if (autopliusResults || autogidasResults) {
 

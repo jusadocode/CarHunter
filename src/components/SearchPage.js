@@ -19,6 +19,9 @@ const SearchPage = () => {
 
     const [advancedSearch, setAdvancedSearch] = useState(false);
 
+
+    const [autopliusTime, setAutopliusTime] = useState(0)
+    const [autogidasTime, setAutogidasTime] = useState(0)
     const [autopliusCars, setAutopliusCars] = useState([])
     const [autogidasCars, setAutogidasCars] = useState([])
 
@@ -279,14 +282,14 @@ const SearchPage = () => {
 
         //const results = await delay()
 
-        const autopliusResults = await Autoplius_scraper(car).carList
+        const autopliusResults = await Autoplius_scraper(car)
 
-        const autogidasResults = await Autogidas_scraper(car).carList
+        const autogidasResults = await Autogidas_scraper(car)
 
         if (autopliusResults || autogidasResults) {
 
-            console.log(autopliusResults)
-            console.log(autogidasResults)
+            console.log(autopliusResults.carList)
+            console.log(autogidasResults.carList)
 
             setSearching(false)
 
@@ -301,11 +304,13 @@ const SearchPage = () => {
             setStatus('cooldown')
 
             if (autopliusResults) {
-                setAutopliusCars(autopliusResults)
+                setAutopliusCars(autopliusResults.carList)
+                setAutopliusTime(autopliusResults.requestTime)
             }
 
             if (autogidasResults) {
-                setAutogidasCars(autogidasResults)
+                setAutogidasCars(autogidasResults.carList)
+                setAutogidasTime(autogidasResults.requestTime)
             }
 
         }
@@ -663,6 +668,7 @@ const SearchPage = () => {
 
                 </Paper>
 
+
             </div >
 
             {/* <Card sx={{ maxWidth: 390 }}>
@@ -680,6 +686,10 @@ const SearchPage = () => {
                 bei
                 < Link href="https://autogidas.lt/" underline="hover" target="_blank" rel="noopener" > autogidas.lt </Link >
             </p >
+
+            <Paper elevation={0} sx={{ m: 1, marginInline: 50, color: 'green' }}>
+                {autopliusTime !== 0 ? `Info gathered in ${autopliusTime} and ${autogidasTime} secs accordingly.` : ''}
+            </Paper>
 
             <div style={{ marginInline: 650, display: 'flex' }} >
                 <div>

@@ -2629,7 +2629,7 @@ const Autogidas_scraper = async (vehicle) => {
                 city: city
             }
 
-            console.log(car)
+            //console.log(car)
             cars.push(car)
             // const searchTitle = $(element).children('h1').children('.js-search-title').text().trim()
             // const resultCount = $(element).children('h1').children('.result-count').text()

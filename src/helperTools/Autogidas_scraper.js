@@ -2610,7 +2610,7 @@ const Autogidas_scraper = async (vehicle) => {
             let power = parameters1[4] ? parameters1[4].trim() : ''
             let mileage = parameters2[0] ? parameters2[0].trim() : ''
             let bodyType = parameters2[1] ? parameters2[1].trim() : ''
-            let city = parameters2[2] ? parameters2[2].trim() : 'Nėra vietovės'
+            let city = parameters2[2] ? parameters2[2].trim() : ''
 
 
 
@@ -2656,8 +2656,8 @@ const Autogidas_scraper = async (vehicle) => {
     else {
         url = `https://autogidas.lt/skelbimai/automobiliai/?
         ${vehicle.offerTypes.length > 1 ? '' : `f_434[]=${vehicle.offerTypes[0].name}&`}
-        f_1%5B0%5D=${vehicle.make.name}&
-        f_model_14%5B0%5D=${vehicle.model.name}&
+        f_1%5B0%5D=${vehicle.make.name ? vehicle.make.name : ''}&
+        f_model_14%5B0%5D=${vehicle.model.name ? vehicle.model.name : ''}&
         f_215=${vehicle.priceFrom}&
         f_216=${vehicle.priceTo}&
         f_41=${vehicle.yearFrom}&

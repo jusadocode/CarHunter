@@ -282,6 +282,7 @@ const SearchPage = () => {
 
         //const results = await delay()
 
+
         const autopliusResults = await Autoplius_scraper(car)
 
         const autogidasResults = await Autogidas_scraper(car)
@@ -406,8 +407,8 @@ const SearchPage = () => {
 
     return (
         <div style={{ position: 'static' }}>
-            <div style={{ marginInline: 500, position: 'static' }} >
-                <Paper elevation={0} variant="outlined" sx={{ m: 1, maxWidth: 800, border: '1px solid' }}>
+            <div style={{ m: 1, marginInline: 500, position: 'static' }} >
+                <Paper elevation={0} variant="outlined" sx={{ marginInline: 6, maxWidth: 800, }}>
                     <div>
                         <FormControl sx={{ m: 2, minWidth: 330 }} size="small">
                             <InputLabel id="demo-simple-select-standard-label">Markė</InputLabel>
@@ -679,13 +680,15 @@ const SearchPage = () => {
                 < Link href="https://autogidas.lt/" underline="hover" target="_blank" rel="noopener" > autogidas.lt </Link >
             </p >
 
-            <Paper elevation={0} sx={{ m: 1, marginInline: 50, color: 'green' }}>
+            <Paper elevation={0} sx={{ m: 4, marginInline: 50, color: 'green' }}>
                 {autopliusTime !== 0 ? `Info gathered in ${autopliusTime} and ${autogidasTime} secs accordingly.` : ''}
             </Paper>
 
             <div style={{ marginInline: 650, display: 'flex' }} >
                 <div>
-
+                    {autopliusCars.length > 0 ? <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                        Autoplius
+                    </Typography> : ''}
                     {  // research hover over
                         autopliusCars.length > 0 ?
                             autopliusCars.map((car, index) => <div><Card sx={{ maxWidth: 345, minHeight: 500 }}>
@@ -737,6 +740,10 @@ const SearchPage = () => {
                     }
                 </div>
                 <div>
+                    {autogidasCars.length > 0 ? <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                        Autogidas
+                    </Typography> : ''}
+
                     { // research hover over
                         autogidasCars.length > 0 ?
                             autogidasCars.map((car, index) => <div><Card sx={{ maxWidth: 345, minHeight: 500 }}>
@@ -780,7 +787,7 @@ const SearchPage = () => {
                                     </CardContent>
 
                                 </CardActionArea>
-                                <Button size="small" href={`https://www.google.com/maps/search/?api=1&query=${car.city}`} target='_blank'>{car.city}</Button>
+                                <Button size="small" href={car.city === '' ? car.city : `https://www.google.com/maps/search/?api=1&query=${car.city}`} target='_blank'>{car.city}</Button>
                             </Card>
                             </div>)
 

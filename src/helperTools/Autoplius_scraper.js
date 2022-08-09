@@ -160,7 +160,7 @@ const Autoplius_scraper = async (vehicle) => {
             seconds++
         }, 1000);
 
-        await client.scrape(url, { proxy_country: 'IT' }) // IT, FR, DE, SA, UK, CZ
+        await client.scrape(url, { proxy_country: 'IT', wait_for_selector: ".auto-lists" }) // IT, FR, DE, SA, UK, CZ
             .then(response => {
                 console.log(response)
                 console.log(cars)

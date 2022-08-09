@@ -337,20 +337,14 @@ const SearchPage = () => {
                     return prevState + 10
 
                 }
-
-
             })
         }, 800);
-
-
-
 
     }
 
 
 
     const handleCooldownCircularProgress = () => {
-
 
         clearInterval(searchTimer)
 
@@ -365,7 +359,6 @@ const SearchPage = () => {
                         active: false,
                         progress: 0
                     }
-
                     return newCooldown
 
                 }
@@ -375,7 +368,6 @@ const SearchPage = () => {
                         active: prevState,
                         progress: prevState.progress + 5
                     }
-
                     return newCooldown
                 }
             })
@@ -415,7 +407,7 @@ const SearchPage = () => {
     return (
         <div style={{ position: 'static' }}>
             <div style={{ marginInline: 500, position: 'static' }} >
-                <Paper elevation={0} variant="outlined" sx={{ m: 1 }}>
+                <Paper elevation={0} variant="outlined" sx={{ m: 1, maxWidth: 800, border: '1px solid' }}>
                     <div>
                         <FormControl sx={{ m: 2, minWidth: 330 }} size="small">
                             <InputLabel id="demo-simple-select-standard-label">Markė</InputLabel>

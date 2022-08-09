@@ -2702,7 +2702,7 @@ const Autogidas_scraper = async (vehicle) => {
             seconds++
         }, 1000);
 
-        await client.scrape(url, { proxy_country: 'IT' }) // IT, FR, DE, SA, UK, CZ
+        await client.scrape(url, { proxy_country: 'IT', wait_for_selector: ".all-items-block" }) // IT, FR, DE, SA, UK, CZ
             .then(response => {
                 console.log(response)
                 scrapeSiteForCars(response.content)

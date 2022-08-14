@@ -57,6 +57,8 @@ function App() {
 
     generateRandomGif()
 
+    document.title = "CarHunt"
+
     //parseSiteHtml()
 
   }, [])

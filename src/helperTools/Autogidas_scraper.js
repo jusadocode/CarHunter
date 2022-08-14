@@ -2651,9 +2651,23 @@ const Autogidas_scraper = async (vehicle) => {
     //fuel_id%5B32%5D=${vehicle.fuelType.id}&
     //body_type_id%5B4%5D=${vehicle.bodyType.id}&
 
-    if (vehicle.make.name === '')
-        url = `https://autogidas.lt/skelbimai/automobiliai/`
-    else {
+    // if (vehicle.make.name === '')
+    //     url = `https://autogidas.lt/skelbimai/automobiliai/`
+    // else {
+    //     url = `https://autogidas.lt/skelbimai/automobiliai/?
+    //     ${vehicle.offerTypes.length > 1 ? '' : `f_434[]=${vehicle.offerTypes[0].name}&`}
+    //     f_1%5B0%5D=${vehicle.make.name ? vehicle.make.name : ''}&
+    //     f_model_14%5B0%5D=${vehicle.model.name ? vehicle.model.name : ''}&
+    //     f_215=${vehicle.priceFrom}&
+    //     f_216=${vehicle.priceTo}&
+    //     f_41=${vehicle.yearFrom}&
+    //     f_42=${vehicle.yearTo}&
+    //     ${vehicle.bodyTypes.map((element, index) => `f_3%5B${index}%5D=${element}&`)}
+    //     ${vehicle.fuelTypes.map((element, index) => `f_2%5B${index}%5D=${element}&`)}
+    //     f_376=${vehicle.textField}`
+    // }
+
+
         url = `https://autogidas.lt/skelbimai/automobiliai/?
         ${vehicle.offerTypes.length > 1 ? '' : `f_434[]=${vehicle.offerTypes[0].name}&`}
         f_1%5B0%5D=${vehicle.make.name ? vehicle.make.name : ''}&
@@ -2665,7 +2679,6 @@ const Autogidas_scraper = async (vehicle) => {
         ${vehicle.bodyTypes.map((element, index) => `f_3%5B${index}%5D=${element}&`)}
         ${vehicle.fuelTypes.map((element, index) => `f_2%5B${index}%5D=${element}&`)}
         f_376=${vehicle.textField}`
-    }
 
     console.log(url)
 

@@ -19,7 +19,6 @@ const SearchPage = () => {
 
     const [advancedSearch, setAdvancedSearch] = useState(false);
 
-
     const [autopliusTime, setAutopliusTime] = useState(0)
     const [autogidasTime, setAutogidasTime] = useState(0)
     const [autopliusCars, setAutopliusCars] = useState([])
@@ -253,6 +252,8 @@ const SearchPage = () => {
         if (newChecked)
             offers.push({ name: 'Naujas', id: 1 })
 
+
+        
         const car = {
             make: make,
             model: model,

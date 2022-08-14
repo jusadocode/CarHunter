@@ -10,6 +10,8 @@ const Autoplius_scraper = async (vehicle) => {
 
     let headline = 'Automobilių nerasta'
 
+    let body
+
     const client = new ScrapingAntClient({ apiKey: 'dbcd5a71a3004a54bed04d4bf9d2a3f6' })
 
     const scrapeSiteForCars = (html) => {
@@ -109,22 +111,39 @@ const Autoplius_scraper = async (vehicle) => {
     //fuel_id%5B32%5D=${vehicle.fuelType.id}&
     //body_type_id%5B4%5D=${vehicle.bodyType.id}&
 
-    if (vehicle.make === '')
-        url = `https://autoplius.lt/skelbimai/naudoti-automobiliai`
-    else {
+    // if (vehicle.make === '')
+    //     url = `https://autoplius.lt/skelbimai/naudoti-automobiliai`
+    // else {
+    //     url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?
+    //     ${vehicle.offerTypes.length > 1 ? '' : `offerType=${vehicle.offerTypes[0].id}`}
+    //     make_id=${vehicle.make.id}&
+    //     model_id=${vehicle.model.id}&
+    //     make_date_from=${vehicle.yearFrom}&
+    //     make_date_to=${vehicle.yearTo}&
+    //     sell_price_from=${vehicle.priceFrom}&
+    //     sell_price_to=${vehicle.priceTo}&
+    //     ${vehicle.fuelTypes.map((element => element))}&
+    //     ${vehicle.bodyTypes.map((element => element))}&
+    //     qt=${vehicle.textField}`
+    // }
+
+    
         url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?
         ${vehicle.offerTypes.length > 1 ? '' : `offerType=${vehicle.offerTypes[0].id}`}
-        make_id=${vehicle.make.id}&
-        model_id=${vehicle.model.id}&
-        make_date_from=${vehicle.yearFrom}&
-        make_date_to=${vehicle.yearTo}&
-        sell_price_from=${vehicle.priceFrom}&
-        sell_price_to=${vehicle.priceTo}&
-        ${vehicle.fuelTypes.map((element => element))}&
-        ${vehicle.bodyTypes.map((element => element))}&
-        qt=${vehicle.textField}`
-    }
+        ${vehicle.make.name ? `make_id=${vehicle.make.id}&` : '' }
+        ${vehicle.model.name ? `model_id=${vehicle.model.id}&` : ''}
+        ${vehicle.yearFrom ?  `make_date_from=${vehicle.yearFrom}&`: ''}
+        ${vehicle.yearTo ?  `make_date_to=${vehicle.yearTo}&`: ''}
+        ${vehicle.priceFrom ? `sell_price_from=${vehicle.priceFrom}&`: ''}
+        ${vehicle.priceTo ? `sell_price_to=${vehicle.priceTo}&`: ''}
+        ${vehicle.bodyTypes.map((element) => `body_type_id%5B${element.id}%5D=${element.id}&`)}
+        ${vehicle.fuelTypes.map((element) => `fuel_type_id%5B${element.id}%5D=${element.id}&`)}
+        qt=${vehicle.textField}`.trim()
 
+        url = url.trim()
+
+    console.log(url)
+    
     // }
     // else {
     // url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?

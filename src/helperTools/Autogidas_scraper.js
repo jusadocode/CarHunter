@@ -2668,7 +2668,7 @@ const Autogidas_scraper = async (vehicle) => {
     // }
 
 
-        url = `https://autogidas.lt/skelbimai/automobiliai/?
+    url = `https://autogidas.lt/skelbimai/automobiliai/?
         ${vehicle.offerTypes.length > 1 ? '' : `f_434[]=${vehicle.offerTypes[0].name}&`}
         f_1%5B0%5D=${vehicle.make.name ? vehicle.make.name : ''}&
         f_model_14%5B0%5D=${vehicle.model.name ? vehicle.model.name : ''}&
@@ -2676,8 +2676,8 @@ const Autogidas_scraper = async (vehicle) => {
         f_216=${vehicle.priceTo}&
         f_41=${vehicle.yearFrom}&
         f_42=${vehicle.yearTo}&
-        ${vehicle.bodyTypes.map((element, index) => `f_3%5B${index}%5D=${element}&`)}
-        ${vehicle.fuelTypes.map((element, index) => `f_2%5B${index}%5D=${element}&`)}
+        ${vehicle.bodyTypes.map((element, index) => `f_3%5B${index}%5D=${element.name}&`)}
+        ${vehicle.fuelTypes.map((element, index) => `f_2%5B${index}%5D=${element.name}&`)}
         f_376=${vehicle.textField}`
 
     console.log(url)

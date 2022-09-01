@@ -127,23 +127,23 @@ const Autoplius_scraper = async (vehicle) => {
     //     qt=${vehicle.textField}`
     // }
 
-    
-        url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?
+
+    url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?
         ${vehicle.offerTypes.length > 1 ? '' : `offerType=${vehicle.offerTypes[0].id}`}
-        ${vehicle.make.name ? `make_id=${vehicle.make.id}&` : '' }
+        ${vehicle.make.name ? `make_id=${vehicle.make.id}&` : ''}
         ${vehicle.model.name ? `model_id=${vehicle.model.id}&` : ''}
-        ${vehicle.yearFrom ?  `make_date_from=${vehicle.yearFrom}&`: ''}
-        ${vehicle.yearTo ?  `make_date_to=${vehicle.yearTo}&`: ''}
-        ${vehicle.priceFrom ? `sell_price_from=${vehicle.priceFrom}&`: ''}
-        ${vehicle.priceTo ? `sell_price_to=${vehicle.priceTo}&`: ''}
+        ${vehicle.yearFrom ? `make_date_from=${vehicle.yearFrom}&` : ''}
+        ${vehicle.yearTo ? `make_date_to=${vehicle.yearTo}&` : ''}
+        ${vehicle.priceFrom ? `sell_price_from=${vehicle.priceFrom}&` : ''}
+        ${vehicle.priceTo ? `sell_price_to=${vehicle.priceTo}&` : ''}
         ${vehicle.bodyTypes.map((element) => `body_type_id%5B${element.id}%5D=${element.id}&`)}
         ${vehicle.fuelTypes.map((element) => `fuel_type_id%5B${element.id}%5D=${element.id}&`)}
         qt=${vehicle.textField}`.trim()
 
-        url = url.trim()
+    url = url.trim()
 
     console.log(url)
-    
+
     // }
     // else {
     // url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?
@@ -170,8 +170,6 @@ const Autoplius_scraper = async (vehicle) => {
 
     let timer
     let seconds = 0
-
-
 
     const scraperCall = async () => {
 

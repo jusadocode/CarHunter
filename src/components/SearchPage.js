@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { FormControlLabel, Checkbox, Link, Paper, TextField, CircularProgress, Card, CardContent, Typography, CardMedia, CardActionArea, Button, ListItemText, OutlinedInput } from '@mui/material';
@@ -65,8 +64,8 @@ const SearchPage = () => {
     const [bodyTypes, setBodyTypes] = useState([]);
     const [fuelTypes, setFuelTypes] = useState([]);
 
-    const [selectedBodyTypes, setselectedBodyTypes] = useState([]);
-    const [selectedFuelTypes, setselectedFuelTypes] = useState([]);
+    const [selectedBodyTypes, setSelectedBodyTypes] = useState([]); // This mf needs a solution
+    const [selectedFuelTypes, setSelectedFuelTypes] = useState([]);
 
     const [text, setText] = useState('');
 
@@ -86,7 +85,11 @@ const SearchPage = () => {
 
         setMake(selectedMake)
 
+
+
         setModels(selectedMake.models)
+
+        setModel('')
 
     }
 
@@ -115,18 +118,22 @@ const SearchPage = () => {
 
     const handleChangeBodyType = (event) => {
 
-        setselectedBodyTypes([])
+        //setSelectedBodyTypes([])
+        console.log(event.target.value)
+        //const selectedBodies = bodyTypes.find((item => item.id === event.target.value))
         setBodyType(event.target.value)
 
-        setselectedBodyTypes(...selectedBodyTypes, event.target.value)
+        setSelectedBodyTypes(event.target.value)
+
+        //console.log(selectedBodyTypes)
     };
 
     const handleChangeFuelType = (event) => {
-
-        setselectedFuelTypes([])
+        console.log(event.target.value)
+        //setSelectedFuelTypes([])
         setFuelType(event.target.value)
 
-        setselectedBodyTypes(...selectedFuelTypes, event.target.value)
+        setSelectedFuelTypes(event.target.value)
     };
 
     const handleText = (event) => {
@@ -252,8 +259,29 @@ const SearchPage = () => {
         if (newChecked)
             offers.push({ name: 'Naujas', id: 1 })
 
+        console.log(selectedBodyTypes)
+        console.log(selectedFuelTypes)
 
-        
+        const bds = []
+
+        selectedBodyTypes.forEach((item) => {
+
+            const body = bodyTypes.find(element => element.name === item)
+            if (body)
+                bds.push(body)
+
+        })
+
+        const fts = []
+
+        selectedFuelTypes.forEach((item) => {
+
+            const fuel = fuelTypes.find(element => element.name === item)
+            if (fuel)
+                fts.push(fuel)
+
+        })
+
         const car = {
             make: make,
             model: model,
@@ -261,11 +289,13 @@ const SearchPage = () => {
             yearTo: yearTo,
             priceFrom: priceFrom,
             priceTo: priceTo,
-            fuelTypes: selectedFuelTypes,
-            bodyTypes: selectedBodyTypes,
+            fuelTypes: fts,
+            bodyTypes: bds,
             offerTypes: offers,
             textField: text
         }
+
+
 
 
         // const timeout = async (ms) => {
@@ -282,7 +312,6 @@ const SearchPage = () => {
         // }
 
         //const results = await delay()
-
 
         const autopliusResults = await Autoplius_scraper(car)
 

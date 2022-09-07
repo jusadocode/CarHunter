@@ -17,7 +17,7 @@ function App() {
 
   const generateRandomGif = () => {
 
-    const words = ["drifting, bmw, audi, supra"]
+    const words = ["drifting, bmw, audi, supra, bentley, bugatti, racing, volvo, off road"]
 
     const rand = Math.floor(Math.random() * words.length)
 
@@ -29,37 +29,12 @@ function App() {
       })
   }
 
-  const parseSiteHtml = () => {
-
-    let titles = []
-
-    axios(`${corsPrefix}autoplius.lt`)
-      .then(html => {
-        const htmlData = html.data
-
-        const $ = cheerio.load(htmlData)
-
-        $('.body-description-line1', htmlData).each((index, element) => {
-          const title = $(element).text()
-          titles.push(title)
-
-        })
-
-
-        console.log(titles)
-      })
-      .catch(console.error())
-
-
-  }
 
   useEffect(() => {
 
     generateRandomGif()
 
     document.title = "CarHunt"
-
-    //parseSiteHtml()
 
   }, [])
 

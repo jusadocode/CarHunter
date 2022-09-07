@@ -3,7 +3,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { FormControlLabel, Checkbox, Link, Paper, TextField, CircularProgress, Card, CardContent, Typography, CardMedia, CardActionArea, Button, ListItemText, OutlinedInput } from '@mui/material';
+import { FormControlLabel, Checkbox, Link, Paper, TextField, CircularProgress, Card, CardContent, Typography, CardMedia, CardActionArea, Button, ListItemText, Stack, Pagination } from '@mui/material';
 import '../App.css'
 import { LoadingButton } from '@mui/lab';
 import Autoplius_scraper from '../helperTools/Autoplius_scraper';
@@ -15,6 +15,8 @@ import { Box } from '@mui/system';
 const SearchPage = () => {
 
     let searchTimer
+
+    const [page, setPage] = useState(1)
 
     const [advancedSearch, setAdvancedSearch] = useState(false);
 
@@ -64,7 +66,7 @@ const SearchPage = () => {
     const [bodyTypes, setBodyTypes] = useState([]);
     const [fuelTypes, setFuelTypes] = useState([]);
 
-    const [selectedBodyTypes, setSelectedBodyTypes] = useState([]); // This mf needs a solution
+    const [selectedBodyTypes, setSelectedBodyTypes] = useState([]);
     const [selectedFuelTypes, setSelectedFuelTypes] = useState([]);
 
     const [text, setText] = useState('');
@@ -282,6 +284,8 @@ const SearchPage = () => {
 
         })
 
+        console.log("FTS " + fts)
+
         const car = {
             make: make,
             model: model,
@@ -403,7 +407,11 @@ const SearchPage = () => {
                 }
             })
         }, 1000)
+    }
 
+    const handlePagination = (event, value) => {
+
+        setPage(value)
 
     }
     useEffect(() => {
@@ -438,6 +446,16 @@ const SearchPage = () => {
     return (
         <div style={{ position: 'static' }}>
             <div style={{ m: 1, marginInline: 500, position: 'static' }} >
+                <Typography>Page : {page}</Typography>
+                <Box>
+                    <Pagination
+                        count={Math.max(autogidasCars.count, autopliusCars.count) / 5}
+                        page={page}
+                        onChange={handlePagination}
+                        sx={{ border: '1px solid' }} />
+                </Box>
+
+
                 <Paper elevation={0} variant="outlined" sx={{ marginInline: 6, maxWidth: 800, }}>
                     <div>
                         <FormControl sx={{ m: 2, minWidth: 330 }} size="small">
@@ -768,6 +786,7 @@ const SearchPage = () => {
 
                             : []
                     }
+
                 </div>
                 <div>
                     {autogidasCars.length > 0 ? <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -825,6 +844,8 @@ const SearchPage = () => {
                     }
                 </div>
             </div>
+
+
 
 
         </div >

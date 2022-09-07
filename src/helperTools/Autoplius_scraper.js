@@ -137,7 +137,7 @@ const Autoplius_scraper = async (vehicle) => {
         ${vehicle.priceFrom ? `sell_price_from=${vehicle.priceFrom}&` : ''}
         ${vehicle.priceTo ? `sell_price_to=${vehicle.priceTo}&` : ''}
         ${vehicle.bodyTypes.map((element) => `body_type_id%5B${element.id}%5D=${element.id}&`)}
-        ${vehicle.fuelTypes.map((element) => `fuel_type_id%5B${element.id}%5D=${element.id}&`)}
+        ${vehicle.fuelTypes.map((element) => `fuel_id%5B${element.id}%5D=${element.id}&`)}
         qt=${vehicle.textField}`.trim()
 
     url = url.trim()

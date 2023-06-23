@@ -2669,7 +2669,7 @@ const Autogidas_scraper = async (vehicle) => {
 
 
     url = `https://autogidas.lt/skelbimai/automobiliai/?
-        ${vehicle.offerTypes.length > 1 ? '' : `f_434[]=${vehicle.offerTypes[0].name}&`}
+        ${vehicle.offerTypes.length > 1 ? '' : `f_434%5B%5D=${vehicle.offerTypes[0].name}&`}
         f_1%5B0%5D=${vehicle.make.name ? vehicle.make.name : ''}&
         f_model_14%5B0%5D=${vehicle.model.name ? vehicle.model.name : ''}&
         f_215=${vehicle.priceFrom}&

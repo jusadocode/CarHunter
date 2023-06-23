@@ -24,7 +24,7 @@ const Autoplius_scraper = async (vehicle) => {
 
             headline = `${searchTitle} " : " ${resultCount}`
 
-            console.log(headline)
+            //console.log(headline)
         })
 
 
@@ -94,7 +94,7 @@ const Autoplius_scraper = async (vehicle) => {
             }
             )
 
-            console.log(trimmedParams)
+            //console.log(trimmedParams)
 
 
             const car = {
@@ -119,7 +119,7 @@ const Autoplius_scraper = async (vehicle) => {
 
     }
 
-    console.log(vehicle)
+    //console.log(vehicle)
 
     let url = ''
 
@@ -144,7 +144,7 @@ const Autoplius_scraper = async (vehicle) => {
 
 
     url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?
-        ${vehicle.offerTypes.length > 1 ? '' : `offerType=${vehicle.offerTypes[0].id}`}
+        ${vehicle.offerTypes.length > 1 ? '' : `offer_type=${vehicle.offerTypes[0].id}&`}
         ${vehicle.make.name ? `make_id=${vehicle.make.id}&` : ''}
         ${vehicle.model.name ? `model_id=${vehicle.model.id}&` : ''}
         ${vehicle.yearFrom ? `make_date_from=${vehicle.yearFrom}&` : ''}

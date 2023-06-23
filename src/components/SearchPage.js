@@ -446,14 +446,14 @@ const SearchPage = () => {
     return (
         <div style={{ position: 'static' }}>
             <div style={{ m: 1, marginInline: 500, position: 'static' }} >
-                <Typography>Page : {page}</Typography>
-                <Box>
+                {/* <Typography>Page : {page}</Typography> */}
+                {/* <Box>
                     <Pagination
                         count={Math.max(autogidasCars.count, autopliusCars.count) / 5}
                         page={page}
                         onChange={handlePagination}
                         sx={{ border: '1px solid' }} />
-                </Box>
+                </Box> */}
 
 
                 <Paper elevation={0} variant="outlined" sx={{ marginInline: 6, maxWidth: 800, }}>

@@ -24,7 +24,7 @@ const Autoplius_scraper = async (vehicle) => {
 
             headline = `${searchTitle} " : " ${resultCount}`
 
-            //console.log(headline)
+            console.log(headline)
         })
 
 
@@ -32,55 +32,70 @@ const Autoplius_scraper = async (vehicle) => {
 
 
             const url = $(element).attr('href')
-            const image = $(element).children('.announcement-media').children('.announcement-photo').children('img').attr('data-src')
-            const stars = $(element).children('.announcement-body').children('.stars-badge').text().trim()
-            const title = $(element).children('.announcement-body').children('.announcement-title').text().trim()
-            const price = $(element).children('.announcement-body').children('.announcement-pricing-info').children('strong').text().trim()
+            const image = $(element).children('.announcement-content').children('.announcement-media').children('.announcement-photo').children('img').attr('data-src')
 
-            var parameters = $(element).children('.announcement-body').children('.announcement-parameters ').children('.bottom-aligner').children()
+            const stars = $(element).children('.announcement-content').children('.announcement-media').children('.announcement-photo').children('.announcement-badges').children(".announcement-badge badge-rise").text().trim()
+            const title = $(element).children('.announcement-content').children('.announcement-body ').children('.announcement-body-heading').children('.announcement-title-container').children('.announcement-title').text().trim()
+
+            const paramTuple = $(element).children('.announcement-content').children('.announcement-body ').children('.announcement-body-heading').children('.announcement-title-container').children('.announcement-title-parameters').children('.announcement-parameters ').children("span")
+            const date = $(paramTuple[0]).text().trim()
+            const bodyType = $(paramTuple[1]).text().trim()
+
+            //const title = $(element).children('.announcement-content').children('.announcement-body ').children('.announcement-title').text().trim()
+            const price = $(element).children('.announcement-content').children('.announcement-body ').children('.announcement-body-heading').children('.pricing-container').children('.announcement-pricing-info').children('strong').text().trim()
+
+            var parameters = $(element).children('.announcement-content').children('.announcement-body ').children('.announcement-parameters-block').children('.announcement-parameters ').children('span')
             //console.log(title + " " + parameters.length)
 
-            let date = ''
             let fuelType = ''
-            let bodyType = ''
+
             let gearBox = ''
             let power = ''
             let mileage = ''
             let city = ''
 
+            // parameters.each((index, elem) => {
+            //     const titleAttr = $(elem).attr('title')
+            //     const value = $(elem).text().trim()
+
+            //     switch (titleAttr) {
+            //         case 'Pagaminimo data':
+            //             date = value
+            //             break
+            //         case 'Kuro tipas':
+            //             fuelType = value
+            //             break
+            //         case 'Kėbulo tipas':
+            //             bodyType = value
+            //             break
+            //         case 'Pavarų dėžė':
+            //             gearBox = value
+            //             break
+            //         case 'Galia':
+            //             power = value
+            //             break
+            //         case 'Rida':
+            //             mileage = value
+            //             break
+            //         case 'Miestas':
+            //             city = value
+            //             break
+            //         default:
+            //             break
+            //     }
+            // })
+
+
+            let trimmedParams = []
+
             parameters.each((index, elem) => {
-                const titleAttr = $(elem).attr('title')
                 const value = $(elem).text().trim()
+                trimmedParams.push(value)
+            }
+            )
 
-                switch (titleAttr) {
-                    case 'Pagaminimo data':
-                        date = value
-                        break
-                    case 'Kuro tipas':
-                        fuelType = value
-                        break
-                    case 'Kėbulo tipas':
-                        bodyType = value
-                        break
-                    case 'Pavarų dėžė':
-                        gearBox = value
-                        break
-                    case 'Galia':
-                        power = value
-                        break
-                    case 'Rida':
-                        mileage = value
-                        break
-                    case 'Miestas':
-                        city = value
-                        break
-                    default:
-                        break
-                }
+            console.log(trimmedParams)
 
-
-
-            })
 
             const car = {
                 title: title,
@@ -89,15 +104,15 @@ const Autoplius_scraper = async (vehicle) => {
                 stars: stars,
                 image: image,
                 date: date,
-                fuelType: fuelType,
+                fuelType: trimmedParams[0],
                 bodyType: bodyType,
-                gearBox: gearBox,
-                power: power,
-                mileage: mileage,
-                city: city
+                gearBox: trimmedParams[1],
+                power: trimmedParams[2],
+                mileage: trimmedParams[3],
+                city: trimmedParams[4]
             }
 
-            //console.log(car)
+            console.log(car)
             cars.push(car)
 
         })
@@ -173,11 +188,12 @@ const Autoplius_scraper = async (vehicle) => {
 
     const scraperCall = async () => {
 
+        // Tracks how much time the query took
         timer = setInterval(() => {
             seconds++
         }, 1000);
 
-        await client.scrape(url, { proxy_country: 'IT', wait_for_selector: ".auto-lists" }) // IT, FR, DE, SA, UK, CZ
+        await client.scrape(url, { proxy_country: 'PL', wait_for_selector: ".auto-lists" }) // IT, FR, DE, SA, UK, CZ
             .then(response => {
                 console.log(response)
                 console.log(cars)

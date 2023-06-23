@@ -2592,7 +2592,7 @@ const Autogidas_scraper = async (vehicle) => {
             //console.log(url)
             const image = $(element).children('a').children('.right').children('.image').children('img').attr('data-src')
 
-            console.log(image)
+            //console.log(image)
             const stars = $(element).children('a').children('.right').children('.description').children('.up').text().trim()
             const title = $(element).children('a').children('.right').children('.description').children('.item-title').text().trim()
             const price = $(element).children('a').children('.right').children('.description').children('.item-price').text().trim()
@@ -2711,11 +2711,12 @@ const Autogidas_scraper = async (vehicle) => {
 
     const scraperCall = async () => {
 
+        // Tracks how much time the query took
         timer = setInterval(() => {
             seconds++
         }, 1000);
 
-        await client.scrape(url, { proxy_country: 'IT', wait_for_selector: ".all-items-block" }) // IT, FR, DE, SA, UK, CZ
+        await client.scrape(url, { proxy_country: 'PL', wait_for_selector: ".all-items-block" }) // IT, FR, DE, SA, UK, CZ
             .then(response => {
                 console.log(response)
                 scrapeSiteForCars(response.content)

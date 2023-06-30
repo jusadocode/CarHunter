@@ -19,20 +19,19 @@ After opening the site you are prompted with the search section:
 
 You can fill in the needed filters using the dropdown menu's for the car of your choice:
 
-![carhunter22](https://github.com/jusadocode/CarHunter/assets/77744027/344f1c3d-04e2-44a0-8991-cc1bb6c47f3f)
+![carhunter22](https://github.com/jusadocode/CarHunter/assets/77744027/107522d3-4668-450f-b3af-f8c288bfaa74)
 
 You can initiate the scraping process by clicking the search button (Ieškoti)
 
 The time from the start of scraping to results on your screen depend on the filters and the chuck of data extracted (3-15 secs on average).
 
-![carhunter 2](https://github.com/jusadocode/CarHunter/assets/77744027/0c7cb6a5-060a-4620-a140-76498f36366d)
+![carhunter 2](https://github.com/jusadocode/CarHunter/assets/77744027/6dcde607-42fb-4672-8cf3-63e20ca52e4c)
 
 After the search operation, there is a small cooldown on the search initiation to avoid the overload of requests for the ScrapingAnt.
 
 After the process finishes, you can see the results portrayed in parallel:
 
-![carhunter 3](https://github.com/jusadocode/CarHunter/assets/77744027/63fb2eaf-7399-4771-8cdf-18a7a474ed97)
-
+![carhunter 3](https://github.com/jusadocode/CarHunter/assets/77744027/d6f71e2f-7823-41b2-8971-e2bf5f7a885a)
 
 for now the info is gathered using autoplius and autogidas results.
 

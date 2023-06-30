@@ -16,7 +16,7 @@ After opening the site you are prompted with the search section:
 
 ![carhunter1](https://github.com/jusadocode/CarHunter/assets/77744027/74855e51-7e32-496f-a7bb-ef4eb3b8276f)
 
-You can fill in the needed filters for the car of your choice:
+You can fill in the needed filters using the dropdown menu's for the car of your choice:
 
 ![carhunter22](https://github.com/jusadocode/CarHunter/assets/77744027/344f1c3d-04e2-44a0-8991-cc1bb6c47f3f)
 
@@ -30,7 +30,9 @@ After the search operation, there is a small cooldown on the search initiation t
 
 After the process finishes, you can see the results portrayed in parallel:
 
-![carhunter 3](https://github.com/jusadocode/CarHunter/assets/77744027/e2a57ac8-d446-46d3-96f5-333983547d60)
+<p align="center" width="100%">
+    <img width="33%" src="(https://github.com/jusadocode/CarHunter/assets/77744027/e2a57ac8-d446-46d3-96f5-333983547d60)"> 
+</p>
 
 for now the info is gathered using autoplius and autogidas results.
 

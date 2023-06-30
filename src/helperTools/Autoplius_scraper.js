@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from 'axios'
-import Constants from '../assets/constants'
 import cheerio from 'cheerio'
 import ScrapingAntClient from '@scrapingant/scrapingant-client'
+import api from '../assets/api.json'
 
 const Autoplius_scraper = async (vehicle) => {
 
@@ -12,7 +12,7 @@ const Autoplius_scraper = async (vehicle) => {
 
     let body
 
-    const client = new ScrapingAntClient({ apiKey: 'dbcd5a71a3004a54bed04d4bf9d2a3f6' })
+    const client = new ScrapingAntClient({ apiKey: api.scrapingAnt })
 
     const scrapeSiteForCars = (html) => {
         const $ = cheerio.load(html)
@@ -159,31 +159,7 @@ const Autoplius_scraper = async (vehicle) => {
 
     console.log(url)
 
-    // }
-    // else {
-    // url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?
-    //     make_id=${vehicle.make.id}&
-    //     model_id=${vehicle.model.id}&
-    //     make_date_from=${vehicle.yearFrom}&
-    //     make_date_to=${vehicle.yearTo}&
-    //     sell_price_from=${vehicle.priceFrom}&
-    //     sell_price_to=${vehicle.priceTo}&
-    //     qt=${vehicle.text}`
-
-    // }
-
-    // const scraperCall = async () => {
-    //     await axios(`https://api.apify.com/v2/actor-tasks/jusadocode~url-list-download-html-task/run-sync-get-dataset-items?token=apify_api_Ii5JCFmHTI6ZJAaqhzjlKa6VzcIDMq0SAAya`)
-    //         .then(response => {
-    //             console.log(response)
-    //             scrapeSiteForCars(response.data[0].fullHtml)
-    //         })
-    //         .catch(error => {
-    //             console.log(error)
-    //         })
-    // }
-
-    let timer
+    let timer = 0
     let seconds = 0
 
     const scraperCall = async () => {

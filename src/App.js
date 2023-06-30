@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Footer from './components/Footer';
 import cheerio from 'cheerio';
 import axios from 'axios';
-
+import api from './assets/api.json'
 
 
 const corsPrefix = 'https://cors-anywhere.herokuapp.com/'
@@ -20,6 +20,10 @@ function App() {
     const words = ["drifting, bmw, audi, supra, bentley, bugatti, racing, volvo, off road"]
 
     const rand = Math.floor(Math.random() * words.length)
+
+
+
+    console.log(api.giphy)
 
     let gifUrl = `https://api.giphy.com/v1/gifs/translate?api_key=aKv46tBfTkitxlFBtNc7XQ7ukaK8wmu7&s=${words[rand]}`;
 

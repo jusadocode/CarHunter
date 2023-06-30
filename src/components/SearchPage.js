@@ -667,42 +667,6 @@ const SearchPage = () => {
                             </Typography>
                         </FormControl>
 
-                        {/* <FormControl sx={{ marginInline: 2, marginBlock: 1, minWidth: 10 }} size="small">
-                            <LoadingButton
-                                onClick={handleSearchClick}
-                                variant="contained"
-                                loading={cooldown.active ? cooldown.active : searching}
-                                loadingIndicator={
-                                    !cooldown.active ?
-                                        <CircularProgress
-                                            variant="determinate"
-                                            sx={{
-                                                color: (theme) =>
-                                                    theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
-                                            }}
-                                            size={20}
-                                            thickness={6}
-                                            value={searchProgress}
-                                        />
-                                        :
-                                        <CircularProgress
-                                            variant="determinate"
-                                            sx={{
-                                                color: (theme) =>
-                                                    theme.palette.error,
-                                            }}
-                                            size={20}
-                                            thickness={6}
-                                            value={cooldown.progress}
-                                        />
-                                    // TODO: change value based on fetching
-                                }
-                            >
-                                Ieškoti
-                            </LoadingButton>
-                        </FormControl> */}
-
-
 
                     </div>
 
@@ -712,15 +676,6 @@ const SearchPage = () => {
 
             </div >
 
-            {/* <Card sx={{ maxWidth: 390 }}>
-                <CardActionArea>
-                    <p>Rezultatai bus teikiami naudojantis
-                        <Link href="https://autoplius.lt/" underline="hover" target="_blank" rel="noopener"> autoplius.lt </Link>
-                        bei
-                        <Link href="https://autogidas.lt/" underline="hover" target="_blank" rel="noopener"> autogidas.lt </Link>
-                    </p>
-                </CardActionArea>
-            </Card> */}
 
             < p > Rezultatai teikiami naudojantis
                 < Link href="https://autoplius.lt/" underline="hover" target="_blank" rel="noopener" > autoplius.lt </Link >

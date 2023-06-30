@@ -2,7 +2,7 @@
 
 React Web application used for car search in Lithuania.
 
-It works by pulling together multiple car market site results in one place in parallel so for an easier search of a new (used) car.
+It works by pulling together multiple car market site results in one place in parallel for an easier search of a new (used) car.
 
 # Tools used
 

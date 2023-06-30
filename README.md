@@ -1,3 +1,40 @@
+# Welcome to CarHunter
+
+React Web application used for car search in Lithuania.
+
+It works by pulling together multiple car market site results in one place in parallel so for an easier search of a new (used) car.
+
+# Tools used
+
+Web scraping section is accomplished using Scraping Ant and their headless browser integration for gathering site html.
+Giphy for cool car pictures/gifs (obviously).
+Cheerio for extracting the needed information from gathered html.
+
+# How to use
+
+After opening the site you are prompted with the search section:
+
+![carhunter1](https://github.com/jusadocode/CarHunter/assets/77744027/74855e51-7e32-496f-a7bb-ef4eb3b8276f)
+
+You can fill in the needed filters for the car of your choice:
+
+![carhunter22](https://github.com/jusadocode/CarHunter/assets/77744027/344f1c3d-04e2-44a0-8991-cc1bb6c47f3f)
+
+You can initiate the scraping process by clicking the search button (Ieškoti)
+
+The time from the start of scraping to results on your screen depend on the filters and the chuck of data extracted (3-15 secs on average).
+
+![carhunter 2](https://github.com/jusadocode/CarHunter/assets/77744027/dc13a306-fb84-4105-b9ee-1cff9b0b1115)
+
+After the search operation, there is a small cooldown on the search initiation to avoid the overload of requests for the ScrapingAnt.
+
+After the process finishes, you can see the results portrayed in parallel:
+
+![carhunter 3](https://github.com/jusadocode/CarHunter/assets/77744027/e2a57ac8-d446-46d3-96f5-333983547d60)
+
+for now the info is gathered using autoplius and autogidas results.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

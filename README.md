@@ -14,7 +14,8 @@ It works by pulling together multiple car market site results in one place in pa
 
 After opening the site you are prompted with the search section:
 
-![carhunter1](https://github.com/jusadocode/CarHunter/assets/77744027/74855e51-7e32-496f-a7bb-ef4eb3b8276f)
+![carhunter1](https://github.com/jusadocode/CarHunter/assets/77744027/fa6ccf3d-e82c-4e77-8f48-0761fc7ad368)
+
 
 You can fill in the needed filters using the dropdown menu's for the car of your choice:
 

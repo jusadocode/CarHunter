@@ -6,9 +6,9 @@ It works by pulling together multiple car market site results in one place in pa
 
 # Tools used
 
-Web scraping section is accomplished using Scraping Ant and their headless browser integration for gathering site html.
-Giphy for cool car pictures/gifs (obviously).
-Cheerio for extracting the needed information from gathered html.
+* Web scraping section is accomplished using Scraping Ant and their headless browser integration for gathering site html.
+* Giphy for cool car pictures/gifs (obviously).
+* Cheerio for extracting the needed information from gathered html.
 
 # How to use
 
@@ -33,6 +33,14 @@ After the process finishes, you can see the results portrayed in parallel:
 ![carhunter 3](https://github.com/jusadocode/CarHunter/assets/77744027/e2a57ac8-d446-46d3-96f5-333983547d60)
 
 for now the info is gathered using autoplius and autogidas results.
+
+
+
+The project is still in development and there is quite a bit of features to be implemented in the future, such as:
+* Support for more variety of car sites
+* Sorting of results
+* Advanced search
+* Price trend of the car in question
 
 
 # Getting Started with Create React App

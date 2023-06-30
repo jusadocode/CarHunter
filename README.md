@@ -24,7 +24,7 @@ You can initiate the scraping process by clicking the search button (Ieškoti)
 
 The time from the start of scraping to results on your screen depend on the filters and the chuck of data extracted (3-15 secs on average).
 
-![carhunter 2](https://github.com/jusadocode/CarHunter/assets/77744027/dc13a306-fb84-4105-b9ee-1cff9b0b1115)
+![carhunter 2](https://github.com/jusadocode/CarHunter/assets/77744027/0c7cb6a5-060a-4620-a140-76498f36366d)
 
 After the search operation, there is a small cooldown on the search initiation to avoid the overload of requests for the ScrapingAnt.
 

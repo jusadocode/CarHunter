@@ -30,9 +30,8 @@ After the search operation, there is a small cooldown on the search initiation t
 
 After the process finishes, you can see the results portrayed in parallel:
 
-<p align="center" width="100%">
-    <img width="33%" src="(https://github.com/jusadocode/CarHunter/assets/77744027/e2a57ac8-d446-46d3-96f5-333983547d60)"> 
-</p>
+![carhunter 3](https://github.com/jusadocode/CarHunter/assets/77744027/63fb2eaf-7399-4771-8cdf-18a7a474ed97)
+
 
 for now the info is gathered using autoplius and autogidas results.
 

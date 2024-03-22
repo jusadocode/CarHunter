@@ -32,19 +32,20 @@ const Autoplius_scraper = async (vehicle) => {
 
 
             const url = $(element).attr('href')
-            const image = $(element).children('.announcement-content').children('.announcement-media').children('.announcement-photo').children('img').attr('data-src')
+            let image = $(element).children('.announcement-content').find('img').attr('data-src')
+            if (!image)
+                image = $(element).children('.announcement-content').find('img').attr('src')
+            const stars = $(element).children('.announcement-content').find(".announcement-badge badge-rise").text().trim()
+            const title = $(element).children('.announcement-content').find('.announcement-title').text().trim()
 
-            const stars = $(element).children('.announcement-content').children('.announcement-media').children('.announcement-photo').children('.announcement-badges').children(".announcement-badge badge-rise").text().trim()
-            const title = $(element).children('.announcement-content').children('.announcement-body ').children('.announcement-body-heading').children('.announcement-title-container').children('.announcement-title').text().trim()
-
-            const paramTuple = $(element).children('.announcement-content').children('.announcement-body ').children('.announcement-body-heading').children('.announcement-title-container').children('.announcement-title-parameters').children('.announcement-parameters ').children("span")
+            const paramTuple = $(element).children('.announcement-content').find('.announcement-parameters ').children("span")
             const date = $(paramTuple[0]).text().trim()
             const bodyType = $(paramTuple[1]).text().trim()
 
             //const title = $(element).children('.announcement-content').children('.announcement-body ').children('.announcement-title').text().trim()
-            const price = $(element).children('.announcement-content').children('.announcement-body ').children('.announcement-body-heading').children('.pricing-container').children('.announcement-pricing-info').children('strong').text().trim()
+            const price = $(element).children('.announcement-content').find('.announcement-pricing-info').children('strong').text().trim()
 
-            var parameters = $(element).children('.announcement-content').children('.announcement-body ').children('.announcement-parameters-block').children('.announcement-parameters ').children('span')
+            var parameters = $(element).children('.announcement-content').find('.announcement-parameters ').children('span')
             //console.log(title + " " + parameters.length)
 
             let fuelType = ''

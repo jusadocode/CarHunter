@@ -1,0 +1,9 @@
+
+#testing
+make a testing file first instead of requests to scraping ant while the page structure isnt clear
+
+#issues
+
+autoplius images missing
+
+cheerio slice/trim errors (params param-icon html strukturoj, atsinaujino html)

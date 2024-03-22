@@ -38,3 +38,21 @@
     transform: rotate(360deg);
   }
 }
+
+.container {
+  background: 2px solid black;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.searchForm {
+  margin: 5vw;
+  margin-inline: 30vw;
+}
+
+
+.card {
+  max-width: 345;
+  min-height: 500
+}

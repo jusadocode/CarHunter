@@ -8,8 +8,10 @@ import '../App.css'
 import { LoadingButton } from '@mui/lab';
 import Autoplius_scraper from '../helperTools/Autoplius_scraper';
 import Autogidas_scraper from '../helperTools/Autogidas_scraper';
-import { orange } from '@mui/material/colors';
-import { Box } from '@mui/system';
+import useStyles from '../Styles'
+
+
+
 
 
 const SearchPage = () => {
@@ -48,8 +50,8 @@ const SearchPage = () => {
 
     const [years, setYears] = useState([]);
 
-    const [make, setMake] = useState('');
-    const [model, setModel] = useState('');
+    const [make, setMake] = useState({});
+    const [model, setModel] = useState({});
 
     const [makes, setMakes] = useState([])
     const [models, setModels] = useState([])
@@ -86,8 +88,6 @@ const SearchPage = () => {
         const selectedMake = makes.find((item => item.id === event.target.value))
 
         setMake(selectedMake)
-
-
 
         setModels(selectedMake.models)
 
@@ -321,10 +321,10 @@ const SearchPage = () => {
 
         const autogidasResults = await Autogidas_scraper(car)
 
-        if (autopliusResults || autogidasResults) {
+        if (autogidasResults) {
 
-            console.log(autopliusResults.carList)
-            console.log(autogidasResults.carList)
+            // console.log(autopliusResults.carList)
+            // console.log(autogidasResults.carList)
 
             setSearching(false)
 
@@ -444,8 +444,8 @@ const SearchPage = () => {
     }
 
     return (
-        <div style={{ position: 'static' }}>
-            <div style={{ m: 1, marginInline: 500, position: 'static' }} >
+        <div >
+            <div >
                 {/* <Typography>Page : {page}</Typography> */}
                 {/* <Box>
                     <Pagination
@@ -456,8 +456,8 @@ const SearchPage = () => {
                 </Box> */}
 
 
-                <Paper elevation={0} variant="outlined" sx={{ marginInline: 6, maxWidth: 800, }}>
-                    <div>
+                <Paper elevation={0} variant="outlined" >
+                    <div className='searchForm'>
                         <FormControl sx={{ m: 2, minWidth: 330 }} size="small">
                             <InputLabel id="demo-simple-select-standard-label">Markė</InputLabel>
                             <Select
@@ -694,7 +694,7 @@ const SearchPage = () => {
                     </Typography> : ''}
                     {  // research hover over
                         autopliusCars.length > 0 ?
-                            autopliusCars.map((car, index) => <div><Card sx={{ maxWidth: 345, minHeight: 500 }}>
+                            autopliusCars.map((car, index) => <div><Card className='card'>
                                 <CardActionArea href={car.url} target='_blank'>
                                     <CardContent>
                                         <CardMedia sx={{ maxHeight: 300, maxWidth: 255, border: car.stars >= 10 ? '5px solid yellow' : '5px solid grey' }}
@@ -712,7 +712,7 @@ const SearchPage = () => {
                                             ⭐{car.stars}
                                             <br />
                                         </Typography>
-                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                        <Typography className={useStyles.weee}>
                                             {car.date}
                                         </Typography>
                                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -750,7 +750,7 @@ const SearchPage = () => {
 
                     { // research hover over
                         autogidasCars.length > 0 ?
-                            autogidasCars.map((car, index) => <div><Card sx={{ maxWidth: 345, minHeight: 500 }}>
+                            autogidasCars.map((car, index) => <div><Card className='card'>
                                 <CardActionArea href={car.url} target='_blank'>
                                     <CardContent>
                                         <CardMedia sx={{ maxHeight: 300, maxWidth: 255, border: car.stars >= 10 ? '5px solid yellow' : '5px solid grey' }}
@@ -768,7 +768,7 @@ const SearchPage = () => {
                                             ⭐{car.stars}
                                             <br />
                                         </Typography>
-                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                        <Typography className='typography-info'>
                                             {car.date}
                                         </Typography>
                                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

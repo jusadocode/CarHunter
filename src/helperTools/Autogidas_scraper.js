@@ -3,6 +3,8 @@ import axios from 'axios'
 import cheerio from 'cheerio'
 import ScrapingAntClient from '@scrapingant/scrapingant-client'
 import api from '../assets/api.json'
+import testHtml from './test'
+
 
 const Autogidas_scraper = async (vehicle) => {
 
@@ -14,41 +16,34 @@ const Autogidas_scraper = async (vehicle) => {
     const client = new ScrapingAntClient({ apiKey: api.scrapingAnt })
 
 
+
+
+
     const scrapeSiteForCars = (html) => {
         const $ = cheerio.load(html)
 
-        const elems = $('article')
+        $('.article-item', html).each((index, element) => {
 
-        const articles = elems.slice(1)
-
-        //console.log(articles)
-
-        articles.each((index, element) => {
-
+            console.log(element)
+            // Need this because the full href isnt located in article item
             const url = `https://autogidas.lt${$(element).children('a').attr('href')}`
 
             //console.log(url)
-            const image = $(element).children('a').children('.right').children('.image').children('img').attr('data-src')
+            const image = $(element).children('a').find('[data-src]').attr('data-src');
 
             //console.log(image)
-            const stars = $(element).children('a').children('.right').children('.description').children('.up').text().trim()
-            const title = $(element).children('a').children('.right').children('.description').children('.item-title').text().trim()
-            const price = $(element).children('a').children('.right').children('.description').children('.item-price').text().trim()
+            const stars = $(element).children('a').find('.up').text()
+            const title = $(element).children('a').find('.item-title').text().trim()
+            const price = $(element).children('a').find('.item-price').text().trim()
             //console.log(price)
 
-            let parameters1 = $(element).children('a').children('.right').children('.description').children('.item-description').children('.primary').text().split(', ')
-
-            let parameters2 = $(element).children('a').children('.right').children('.description').children('.item-description').children('.secondary').text().split(', ')
-
-            //console.log(title + " " + parameters1)
-
-            let date = parameters1[2].slice(0, parameters1[2].length - 1).trim()
-            let fuelType = parameters1[1].trim()
-            let gearBox = parameters1[3].trim()
-            let power = parameters1[4] ? parameters1[4].trim() : ''
-            let mileage = parameters2[0] ? parameters2[0].trim() : ''
-            let bodyType = parameters2[1] ? parameters2[1].trim() : ''
-            let city = parameters2[2] ? parameters2[2].trim() : ''
+            let date = $(element).find('.icon.param-year b').text().trim();
+            let fuelType = $(element).find('.icon.param-fuel-type b').text().trim();
+            let gearBox = $(element).find('.icon.param-gearbox b').text().trim();
+            let power = $(element).find('.icon.param-engine b').text().trim();
+            let mileage = $(element).find('.icon.param-mileage b').text().trim();
+            let bodyType = $(element).find('.icon.param-body b').text().trim(); // Assuming you have a class .param-body
+            let city = $(element).find('.icon.param-location b').text().trim();
 
 
 
@@ -67,8 +62,9 @@ const Autogidas_scraper = async (vehicle) => {
                 city: city
             }
 
-            //console.log(car)
-            cars.push(car)
+            // console.log(car)
+            if (car.title !== '')
+                cars.push(car)
             // const searchTitle = $(element).children('h1').children('.js-search-title').text().trim()
             // const resultCount = $(element).children('h1').children('.result-count').text()
 
@@ -163,6 +159,7 @@ const Autogidas_scraper = async (vehicle) => {
             .catch(error => {
                 console.log(error)
             })
+
     }
 
 

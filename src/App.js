@@ -23,9 +23,9 @@ function App() {
 
 
 
-    console.log(api.giphy)
 
-    let gifUrl = `https://api.giphy.com/v1/gifs/translate?api_key=aKv46tBfTkitxlFBtNc7XQ7ukaK8wmu7&s=${words[rand]}`;
+
+    let gifUrl = `https://api.giphy.com/v1/gifs/translate?api_key={api.giphy}=${words[rand]}`;
 
     fetch(gifUrl)
       .then(response => response.json()).then(gifLinks => {

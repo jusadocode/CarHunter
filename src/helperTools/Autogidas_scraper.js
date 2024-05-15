@@ -16,9 +16,6 @@ const Autogidas_scraper = async (vehicle) => {
     const client = new ScrapingAntClient({ apiKey: api.scrapingAnt })
 
 
-
-
-
     const scrapeSiteForCars = (html) => {
         const $ = cheerio.load(html)
 
@@ -46,7 +43,6 @@ const Autogidas_scraper = async (vehicle) => {
             let city = $(element).find('.icon.param-location b').text().trim();
 
 
-
             const car = {
                 title: title,
                 price: price,
@@ -65,12 +61,7 @@ const Autogidas_scraper = async (vehicle) => {
             // console.log(car)
             if (car.title !== '')
                 cars.push(car)
-            // const searchTitle = $(element).children('h1').children('.js-search-title').text().trim()
-            // const resultCount = $(element).children('h1').children('.result-count').text()
-
-            // headline = `${searchTitle} " : " ${resultCount}`
-
-            // console.log(headline)
+            
         })
 
 
@@ -81,25 +72,6 @@ const Autogidas_scraper = async (vehicle) => {
     console.log(vehicle)
 
     let url = ''
-
-    //fuel_id%5B32%5D=${vehicle.fuelType.id}&
-    //body_type_id%5B4%5D=${vehicle.bodyType.id}&
-
-    // if (vehicle.make.name === '')
-    //     url = `https://autogidas.lt/skelbimai/automobiliai/`
-    // else {
-    //     url = `https://autogidas.lt/skelbimai/automobiliai/?
-    //     ${vehicle.offerTypes.length > 1 ? '' : `f_434[]=${vehicle.offerTypes[0].name}&`}
-    //     f_1%5B0%5D=${vehicle.make.name ? vehicle.make.name : ''}&
-    //     f_model_14%5B0%5D=${vehicle.model.name ? vehicle.model.name : ''}&
-    //     f_215=${vehicle.priceFrom}&
-    //     f_216=${vehicle.priceTo}&
-    //     f_41=${vehicle.yearFrom}&
-    //     f_42=${vehicle.yearTo}&
-    //     ${vehicle.bodyTypes.map((element, index) => `f_3%5B${index}%5D=${element}&`)}
-    //     ${vehicle.fuelTypes.map((element, index) => `f_2%5B${index}%5D=${element}&`)}
-    //     f_376=${vehicle.textField}`
-    // }
 
 
     url = `https://autogidas.lt/skelbimai/automobiliai/?
@@ -115,30 +87,6 @@ const Autogidas_scraper = async (vehicle) => {
         f_376=${vehicle.textField}`
 
     console.log(url)
-
-    // }
-    // else {
-    // url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?
-    //     make_id=${vehicle.make.id}&
-    //     model_id=${vehicle.model.id}&
-    //     make_date_from=${vehicle.yearFrom}&
-    //     make_date_to=${vehicle.yearTo}&
-    //     sell_price_from=${vehicle.priceFrom}&
-    //     sell_price_to=${vehicle.priceTo}&
-    //     qt=${vehicle.text}`
-
-    // }
-
-    // const scraperCall = async () => {
-    //     await axios(`https://api.apify.com/v2/actor-tasks/jusadocode~url-list-download-html-task/run-sync-get-dataset-items?token=apify_api_Ii5JCFmHTI6ZJAaqhzjlKa6VzcIDMq0SAAya`)
-    //         .then(response => {
-    //             console.log(response)
-    //             scrapeSiteForCars(response.data[0].fullHtml)
-    //         })
-    //         .catch(error => {
-    //             console.log(error)
-    //         })
-    // }
 
     let timer
     let seconds = 0

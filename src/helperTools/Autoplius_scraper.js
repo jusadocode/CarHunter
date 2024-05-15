@@ -120,30 +120,10 @@ const Autoplius_scraper = async (vehicle) => {
 
     }
 
-    //console.log(vehicle)
 
     let url = ''
 
-    //fuel_id%5B32%5D=${vehicle.fuelType.id}&
-    //body_type_id%5B4%5D=${vehicle.bodyType.id}&
-
-    // if (vehicle.make === '')
-    //     url = `https://autoplius.lt/skelbimai/naudoti-automobiliai`
-    // else {
-    //     url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?
-    //     ${vehicle.offerTypes.length > 1 ? '' : `offerType=${vehicle.offerTypes[0].id}`}
-    //     make_id=${vehicle.make.id}&
-    //     model_id=${vehicle.model.id}&
-    //     make_date_from=${vehicle.yearFrom}&
-    //     make_date_to=${vehicle.yearTo}&
-    //     sell_price_from=${vehicle.priceFrom}&
-    //     sell_price_to=${vehicle.priceTo}&
-    //     ${vehicle.fuelTypes.map((element => element))}&
-    //     ${vehicle.bodyTypes.map((element => element))}&
-    //     qt=${vehicle.textField}`
-    // }
-
-
+    
     url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?
         ${vehicle.offerTypes.length > 1 ? '' : `offer_type=${vehicle.offerTypes[0].id}&`}
         ${vehicle.make.name ? `make_id=${vehicle.make.id}&` : ''}

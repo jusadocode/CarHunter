@@ -10,6 +10,9 @@ It works by pulling together multiple car market site results in one place in pa
 * Giphy for cool car pictures/gifs (obviously).
 * Cheerio for extracting the needed information from gathered html.
 
+# Installation and Setup
+Coming soon
+
 # How to use
 
 After opening the site you are prompted with the search section:

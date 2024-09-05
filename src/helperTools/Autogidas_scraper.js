@@ -1,20 +1,14 @@
-import React from 'react'
-import axios from 'axios'
+
 import cheerio from 'cheerio'
 import ScrapingAntClient from '@scrapingant/scrapingant-client'
-import api from '../assets/api.json'
-import testHtml from './test'
-
 
 const Autogidas_scraper = async (vehicle) => {
 
-
-    let cars = []
+    const cars = []
 
     let headline = 'Automobilių nerasta'
 
-    const client = new ScrapingAntClient({ apiKey: api.scrapingAnt })
-
+    const client = new ScrapingAntClient({ apiKey: import.meta.env.VITE_APP_SCRAPINGANT_API})
 
     const scrapeSiteForCars = (html) => {
         const $ = cheerio.load(html)
@@ -63,9 +57,6 @@ const Autogidas_scraper = async (vehicle) => {
                 cars.push(car)
             
         })
-
-
-
 
     }
 

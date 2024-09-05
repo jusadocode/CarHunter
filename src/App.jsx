@@ -3,35 +3,30 @@ import "./App.css";
 import SearchPage from "./components/SearchPage";
 import { useEffect, useState } from "react";
 import Footer from "./components/Footer";
-import cheerio from "cheerio";
-import axios from "axios";
-import api from "./assets/api.json";
 
 const corsPrefix = "https://cors-anywhere.herokuapp.com/";
+const apiKey = import.meta.env.VITE_APP_GIPHY_API;
 
 function App() {
-  const [gifLinks, setGifLinks] = useState([]);
+  const [movingPic, setMovingPic] = useState([]);
+  const words = [
+    "drifting, bmw, audi, supra, bentley, bugatti, racing, volvo, off road",
+  ];
 
   const generateRandomGif = () => {
-    const words = [
-      "drifting, bmw, audi, supra, bentley, bugatti, racing, volvo, off road",
-    ];
+    const randomIndex = Math.floor(Math.random() * words.length);
 
-    const rand = Math.floor(Math.random() * words.length);
-
-    let gifUrl = `https://api.giphy.com/v1/gifs/translate?api_key=${api.giphy}&s=${words[rand]}`;
+    const gifUrl = `https://api.giphy.com/v1/gifs/translate?api_key=${apiKey}&s=${words[randomIndex]}`;
 
     fetch(gifUrl)
       .then((response) => response.json())
-      .then((gifLinks) => {
-        setGifLinks(gifLinks.data.images.original.url);
+      .then((gifUrl) => {
+        setMovingPic(gifUrl.data.images.original.url);
       });
   };
 
   useEffect(() => {
     generateRandomGif();
-
-    document.title = "CarHunt";
   }, []);
 
   return (
@@ -39,7 +34,7 @@ function App() {
       <Header />
       <SearchPage />
       <div style={{ padding: "20px" }}>
-        <img src={gifLinks} alt="gif" />
+        <img src={movingPic} alt="gif" />
       </div>
       <Footer />
     </div>

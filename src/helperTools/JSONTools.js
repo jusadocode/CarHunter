@@ -1,88 +1,74 @@
-
 /**
 A class with specific set of JSON operations for the scraper
  */
 class JSONTools {
+  static jsonMerger = (makes, models) => {
+    let resultJSON = "[";
 
-    static jsonMerger = (makes, models) => {
+    for (var make in makes) {
+      let currentMakeJson = `{ "id":${make.id}, "name": ${make.name}`;
 
-        let resultJSON = '['
+      currentMakeJson += `, models: [ `;
 
-        for (var make in makes) {
-            let currentMakeJson = `{ "id":${make.id}, "name": ${make.name}`
+      var currentModels = models[make.id];
+      let modelJSON = "{";
 
-            currentMakeJson += `, models: [ `
+      for (var property in currentModels) {
+        modelJSON += `{ "id": ${property}, "name":${currentModels[property]} } `;
+      }
 
-            var currentModels = models[make.id]
-            let modelJSON = '{'
+      currentMakeJson += modelJSON + " ] }";
 
-            for (var property in currentModels) {
-                modelJSON += `{ "id": ${property}, "name":${currentModels[property]} } `
-
-
-            }
-
-            currentMakeJson += modelJSON + ' ] }'
-
-            resultJSON += currentMakeJson + '},'
-        }
-
-        resultJSON = resultJSON.slice(0, -1);
-
-        resultJSON += ']'
-
-        return resultJSON
-
+      resultJSON += currentMakeJson + "},";
     }
 
-    /*
-    */
-    static jsonStringifier = (makes, models) => {
+    resultJSON = resultJSON.slice(0, -1);
 
-        let finalMakes = []
+    resultJSON += "]";
 
-        for (let i = 0; i < makes.length; i++) {
+    return resultJSON;
+  };
 
-            const make = makes[i]
+  /*
+   */
+  static jsonStringifier = (makes, models) => {
+    let finalMakes = [];
 
-            let finalCurrentModels = []
+    for (let i = 0; i < makes.length; i++) {
+      const make = makes[i];
 
-            var currentModels = models[make.id]
+      let finalCurrentModels = [];
 
-            for (var property in currentModels) {
+      var currentModels = models[make.id];
 
-                const currentModel = {
-                    id: property,
-                    name: currentModels[property]
-                }
+      for (var property in currentModels) {
+        const currentModel = {
+          id: property,
+          name: currentModels[property],
+        };
 
-                finalCurrentModels.push(currentModel)
-            }
+        finalCurrentModels.push(currentModel);
+      }
 
-            const newMake = { ...make, models: finalCurrentModels }
+      const newMake = { ...make, models: finalCurrentModels };
 
-            finalMakes.push(newMake)
-
-        }
-
-        const resultJSON = JSON.stringify(finalMakes)
-
-        return resultJSON
-
+      finalMakes.push(newMake);
     }
 
-    static printJSONToFile = (jsonContent, fileName) => {
+    const resultJSON = JSON.stringify(finalMakes);
 
-        const blob = new Blob([jsonContent], { type: "text/plain" });
+    return resultJSON;
+  };
 
-        const url = URL.createObjectURL(blob)
-        const link = document.createElement('a')
-        link.download = fileName
-        link.href = url
-        link.click()
+  static printJSONToFile = (jsonContent, fileName) => {
+    const blob = new Blob([jsonContent], { type: "text/plain" });
 
-    }
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.download = fileName;
+    link.href = url;
+    link.click();
+  };
 }
 
-
-export default JSONTools
+export default JSONTools;

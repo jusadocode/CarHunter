@@ -4,7 +4,6 @@ import SearchPage from "./components/SearchPage";
 import { useEffect, useState } from "react";
 import Footer from "./components/Footer";
 
-const corsPrefix = "https://cors-anywhere.herokuapp.com/";
 const apiKey = import.meta.env.VITE_APP_GIPHY_API;
 
 function App() {

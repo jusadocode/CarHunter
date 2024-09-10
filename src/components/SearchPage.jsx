@@ -711,7 +711,7 @@ const SearchPage = () => {
           : ""}
       </Paper>
 
-      <div style={{ marginInline: 650, display: "flex" }}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <div>
           {autopliusCars.length > 0 ? (
             <Typography
@@ -741,7 +741,9 @@ const SearchPage = () => {
                                 : "5px solid grey",
                           }}
                           component="img"
-                          image={car.image}
+                          image={
+                            "https://autoplius-img.dgn.lt/ann_25_326563693/audi-a6-2-0-l-sedanas-2012-dyzelinas.jpg"
+                          }
                           alt={car.name}
                         />
                         <Typography

@@ -15,6 +15,7 @@ notes
 
 # keys
 **/assets
+/cars.json
 
 # production
 /build

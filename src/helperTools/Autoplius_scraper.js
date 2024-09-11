@@ -1,6 +1,5 @@
 import cheerio from "cheerio";
 import ScrapingAntClient from "@scrapingant/scrapingant-client";
-import testHtml from "./aplus_structure";
 
 const AutopliusScraper = async (vehicle) => {
   let headline = "Automobilių nerasta";
@@ -86,21 +85,24 @@ const AutopliusScraper = async (vehicle) => {
     return cars;
   };
 
-  const url = generateUrl(vehicle);
-  console.log(url);
-
-  const scrape = async () => {
+  const scrape = async (url) => {
     const startTime = Date.now();
-
     let cars = [];
 
     try {
-      cars = scrapeSiteForCars(testHtml);
+      const response = await client.scrape(url, {
+        proxy_country: "PL", // Poland as the proxy country
+        wait_for_selector: ".all-items-block",
+        proxy_type: "residential",
+      });
+
+      cars = scrapeSiteForCars(response.content);
     } catch (error) {
       console.error("Error during scraping:", error);
     } finally {
       const endTime = Date.now();
       const duration = Math.floor((endTime - startTime) / 1000); // Convert milliseconds to seconds
+
       return {
         carList: cars,
         requestTime: duration,
@@ -108,7 +110,10 @@ const AutopliusScraper = async (vehicle) => {
     }
   };
 
-  const result = scrape();
+  const url = generateUrl(vehicle);
+  console.log(url);
+
+  const result = scrape(url);
 
   return result;
 };

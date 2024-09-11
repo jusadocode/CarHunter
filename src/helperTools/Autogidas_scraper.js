@@ -1,6 +1,5 @@
 import cheerio from "cheerio";
 import ScrapingAntClient from "@scrapingant/scrapingant-client";
-import testHtml from "./agidas_structure";
 
 const AutogidasScraper = async (vehicle) => {
   const client = new ScrapingAntClient({
@@ -70,20 +69,24 @@ const AutogidasScraper = async (vehicle) => {
     return `https://autogidas.lt/skelbimai/automobiliai/?${params}`;
   };
 
-  const url = generateUrl(vehicle);
-  console.log(url);
-
-  const scraperCall = async () => {
-    const startTime = Date.now();
+  const scrape = async (url) => {
+    const startTime = Date.now(); // Start the timer
     let cars = [];
 
     try {
-      cars = scrapeSiteForCars(testHtml);
+      const response = await client.scrape(url, {
+        proxy_country: "PL", // Use Poland as proxy country
+        wait_for_selector: ".article-item",
+        proxy_type: "residential",
+      });
+
+      cars = scrapeSiteForCars(response.content);
     } catch (error) {
       console.error("Error during scraping:", error);
     } finally {
-      const endTime = Date.now();
-      const duration = Math.floor((endTime - startTime) / 1000); // Convert milliseconds to seconds
+      const endTime = Date.now(); // End the timer
+      const duration = Math.floor((endTime - startTime) / 1000); // Calculate the time in seconds
+
       return {
         carList: cars,
         requestTime: duration,
@@ -91,7 +94,12 @@ const AutogidasScraper = async (vehicle) => {
     }
   };
 
-  return scraperCall();
+  const url = generateUrl(vehicle);
+  console.log(url);
+
+  const result = scrape(url);
+
+  return result;
 };
 
 export default AutogidasScraper;

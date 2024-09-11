@@ -12,10 +12,14 @@
 /helperTools/test.html
 /helperTools/test2.html
 notes
+aplus_structure.js
+agidas_structure.js
+autogidas.html
+autoplius.html
+cars.json
 
 # keys
 **/assets
-/cars.json
 
 # production
 /build

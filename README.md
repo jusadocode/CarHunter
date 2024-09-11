@@ -10,6 +10,10 @@ It works by pulling together multiple car market site results in one place in pa
 * Giphy for cool car pictures/gifs (obviously).
 * Cheerio for extracting the needed information from gathered html.
 
+# Currently working on
+* Transitioning to periodical headless browsing (using tools like Playwright) with the idea of greatly increasing scraping speeds, and reducing reliance on ScrapingAnt.
+* Updating the UI/UX for better user experience.
+
 # Installation and Setup
 Coming soon
 
@@ -37,7 +41,6 @@ After the process finishes, you can see the results portrayed in parallel:
 ![carhunter 3](https://github.com/jusadocode/CarHunter/assets/77744027/d6f71e2f-7823-41b2-8971-e2bf5f7a885a)
 
 for now the info is gathered using autoplius and autogidas results.
-
 
 
 The project is still in development and there is quite a bit of features to be implemented in the future, such as:

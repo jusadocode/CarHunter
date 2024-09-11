@@ -20,14 +20,18 @@ const Autogidas_scraper = async (vehicle) => {
         .children("a")
         .attr("href")}`;
 
-      //console.log(url)
-      let image = $(element).find("img").attr("data-src");
+      // lazy loading
 
-      //console.log(image)
+      let image =
+        $(element).find("img").attr("data-src") ||
+        $(element).find("img").attr("src");
+
+      if (!image.startsWith("http")) {
+        image = "https:" + image; // Handle protocol-less URLs like //example.com/pic.jpg
+      }
       const stars = $(element).find(".up").text();
       const title = $(element).find(".item-title").text().trim();
       const price = $(element).find(".item-price").text().trim();
-      //console.log(price)
 
       let date = $(element).find(".icon.param-year b").text().trim();
       let fuelType = $(element).find(".icon.param-fuel-type b").text().trim();
@@ -52,7 +56,6 @@ const Autogidas_scraper = async (vehicle) => {
         city: city,
       };
 
-      // console.log(car)
       if (car.title !== "") cars.push(car);
     });
   };

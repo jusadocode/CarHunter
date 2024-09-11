@@ -3,6 +3,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import sportsCar from "../../public/sports-car.png";
 import {
   FormControlLabel,
   Checkbox,
@@ -22,8 +23,8 @@ import {
 } from "@mui/material";
 import "../App.css";
 import { LoadingButton } from "@mui/lab";
-import Autoplius_scraper from "../helperTools/Autoplius_scraper";
-import Autogidas_scraper from "../helperTools/Autogidas_scraper";
+import Autoplius_scraper from "../helperTools/autoplius_scraper";
+import Autogidas_scraper from "../helperTools/autogidas_scraper";
 import useStyles from "../Styles";
 
 const SearchPage = () => {
@@ -401,7 +402,7 @@ const SearchPage = () => {
                 </Box> */}
 
         <Paper elevation={0} variant="outlined">
-          <div className="searchForm">
+          <div className="searchForm main-style">
             <FormControl sx={{ m: 2, minWidth: 330 }} size="small">
               <InputLabel id="demo-simple-select-standard-label">
                 Markė
@@ -741,9 +742,7 @@ const SearchPage = () => {
                                 : "5px solid grey",
                           }}
                           component="img"
-                          image={
-                            "https://autoplius-img.dgn.lt/ann_25_326563693/audi-a6-2-0-l-sedanas-2012-dyzelinas.jpg"
-                          }
+                          src={car.image}
                           alt={car.name}
                         />
                         <Typography
@@ -842,8 +841,13 @@ const SearchPage = () => {
                                 : "5px solid grey",
                           }}
                           component="img"
-                          image={car.image}
+                          src={car.image || sportsCar}
                           alt={car.name}
+                          // For instances where the image isnt available due to lazy load
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = sportsCar;
+                          }}
                         />
                         <Typography
                           sx={{ fontSize: 14 }}

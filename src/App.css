@@ -34,6 +34,5 @@
 }
 
 .card {
-  max-width: 345;
-  min-height: 500;
+  margin: 2rem;
 }

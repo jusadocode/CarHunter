@@ -1,8 +1,9 @@
 import { BottomNavigation, Paper, Link, Typography, Box } from "@mui/material";
-
+import "../App.css";
 export default function Footer() {
   return (
     <Paper
+      className="main-style"
       sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
       elevation={3}
     >

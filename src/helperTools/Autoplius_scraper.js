@@ -1,6 +1,7 @@
 import cheerio from "cheerio";
 import ScrapingAntClient from "@scrapingant/scrapingant-client";
 import testHtml from "./aplus_structure";
+
 const Autoplius_scraper = async (vehicle) => {
   const cars = [];
 

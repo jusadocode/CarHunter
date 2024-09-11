@@ -47,10 +47,14 @@ console.time("Execution Time");
   }
 
   // Write all car data to a JSON file
-  fs.writeFile("cars.json", JSON.stringify(allCars, null, 2), (err) => {
-    if (err) throw err;
-    console.log("All data has been written to file");
-  });
+  fs.writeFile(
+    "carsAutoplius.json",
+    JSON.stringify(allCars, null, 2),
+    (err) => {
+      if (err) throw err;
+      console.log("All data has been written to file");
+    }
+  );
 
   await browser.close();
   console.timeEnd("Execution Time");

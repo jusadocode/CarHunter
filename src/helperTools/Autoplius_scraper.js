@@ -2,171 +2,115 @@ import cheerio from "cheerio";
 import ScrapingAntClient from "@scrapingant/scrapingant-client";
 import testHtml from "./aplus_structure";
 
-const Autoplius_scraper = async (vehicle) => {
-  const cars = [];
-
+const AutopliusScraper = async (vehicle) => {
   let headline = "Automobilių nerasta";
 
   const client = new ScrapingAntClient({
     apiKey: import.meta.env.VITE_APP_SCRAPINGANT_API,
   });
 
+  const generateUrl = (vehicle) => {
+    const params = [
+      vehicle.offerTypes.length > 1
+        ? ""
+        : `offer_type=${vehicle.offerTypes[0].id}`,
+      vehicle.make.name ? `make_id=${vehicle.make.id}` : "",
+      vehicle.model.name ? `model_id=${vehicle.model.id}` : "",
+      vehicle.yearFrom ? `make_date_from=${vehicle.yearFrom}` : "",
+      vehicle.yearTo ? `make_date_to=${vehicle.yearTo}` : "",
+      vehicle.priceFrom ? `sell_price_from=${vehicle.priceFrom}` : "",
+      vehicle.priceTo ? `sell_price_to=${vehicle.priceTo}` : "",
+      ...vehicle.bodyTypes.map(
+        (element) => `body_type_id%5B${element.id}%5D=${element.id}`
+      ),
+      ...vehicle.fuelTypes.map(
+        (element) => `fuel_id%5B${element.id}%5D=${element.id}`
+      ),
+      `qt=${vehicle.textField}`,
+    ];
+
+    return `https://autoplius.lt/skelbimai/naudoti-automobiliai?${params
+      .filter(Boolean)
+      .join("&")}`;
+  };
+
   const scrapeSiteForCars = (html) => {
+    const cars = [];
     const $ = cheerio.load(html);
 
-    $(".search-list-title", html).each((index, element) => {
-      const searchTitle = $(element)
-        .children("h1")
-        .children(".js-search-title")
-        .text()
-        .trim();
-      const resultCount = $(element)
-        .children("h1")
-        .children(".result-count")
-        .text();
-
-      headline = `${searchTitle} " : " ${resultCount}`;
-
-      //console.log(headline)
+    $(".search-list-title").each((index, element) => {
+      const searchTitle = $(element).find("h1 .js-search-title").text().trim();
+      const resultCount = $(element).find("h1 .result-count").text();
+      headline = `${searchTitle} : ${resultCount}`;
     });
 
-    $(".announcement-item", html).each((index, element) => {
+    $(".announcement-item").each((index, element) => {
       const url = $(element).attr("href");
+      let image = $(element).find(".announcement-content img").attr("data-src");
+      if (!image)
+        image = $(element).find(".announcement-content img").attr("src");
 
-      let image = $(element)
-        .children(".announcement-content")
-        .find("img")
-        .attr("data-src");
-      if (!image) image = $(element).find("img").attr("src");
       const stars = $(element)
         .find(".announcement-badge.badge-rise")
         .text()
         .trim();
       const title = $(element).find(".announcement-title").text().trim();
-
-      //const title = $(element).children('.announcement-content').children('.announcement-body ').children('.announcement-title').text().trim()
       const price = $(element)
-        .find(".announcement-pricing-info")
-        .children("strong")
+        .find(".announcement-pricing-info strong")
         .text()
         .trim();
 
-      var parameters = $(element)
-        .find(".announcement-parameters")
-        .children("span");
-      //console.log(title + " " + parameters.length)
-
-      // parameters.each((index, elem) => {
-      //     const titleAttr = $(elem).attr('title')
-      //     const value = $(elem).text().trim()
-
-      //     switch (titleAttr) {
-      //         case 'Pagaminimo data':
-      //             date = value
-      //             break
-      //         case 'Kuro tipas':
-      //             fuelType = value
-      //             break
-      //         case 'Kėbulo tipas':
-      //             bodyType = value
-      //             break
-      //         case 'Pavarų dėžė':
-      //             gearBox = value
-      //             break
-      //         case 'Galia':
-      //             power = value
-      //             break
-      //         case 'Rida':
-      //             mileage = value
-      //             break
-      //         case 'Miestas':
-      //             city = value
-      //             break
-      //         default:
-      //             break
-      //     }
-      // })
-
-      let trimmedParams = [];
-
-      parameters.each((index, elem) => {
-        const value = $(elem).text().trim();
-        trimmedParams.push(value);
-      });
-
-      //console.log(trimmedParams)
+      const parameters = $(element)
+        .find(".announcement-parameters span")
+        .map((_, elem) => $(elem).text().trim())
+        .get();
 
       const car = {
-        title: title,
-        price: price,
-        url: url,
-        stars: stars,
-        image: image,
-        date: trimmedParams[0],
-        fuelType: trimmedParams[2],
-        bodyType: trimmedParams[1],
-        gearBox: trimmedParams[3],
-        power: trimmedParams[4],
-        mileage: trimmedParams[5],
-        city: trimmedParams[6],
+        title,
+        price,
+        url,
+        stars,
+        image,
+        date: parameters[0],
+        fuelType: parameters[2],
+        bodyType: parameters[1],
+        gearBox: parameters[3],
+        power: parameters[4],
+        mileage: parameters[5],
+        city: parameters[6],
       };
 
-      console.log(car);
       cars.push(car);
     });
+
+    return cars;
   };
 
-  let url = "";
-
-  url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?
-        ${
-          vehicle.offerTypes.length > 1
-            ? ""
-            : `offer_type=${vehicle.offerTypes[0].id}&`
-        }
-        ${vehicle.make.name ? `make_id=${vehicle.make.id}&` : ""}
-        ${vehicle.model.name ? `model_id=${vehicle.model.id}&` : ""}
-        ${vehicle.yearFrom ? `make_date_from=${vehicle.yearFrom}&` : ""}
-        ${vehicle.yearTo ? `make_date_to=${vehicle.yearTo}&` : ""}
-        ${vehicle.priceFrom ? `sell_price_from=${vehicle.priceFrom}&` : ""}
-        ${vehicle.priceTo ? `sell_price_to=${vehicle.priceTo}&` : ""}
-        ${vehicle.bodyTypes.map(
-          (element) => `body_type_id%5B${element.id}%5D=${element.id}&`
-        )}
-        ${vehicle.fuelTypes.map(
-          (element) => `fuel_id%5B${element.id}%5D=${element.id}&`
-        )}
-        qt=${vehicle.textField}`.trim();
-
-  url = url.trim();
-
+  const url = generateUrl(vehicle);
   console.log(url);
 
-  let timer = 0;
-  let seconds = 0;
+  const scrape = async () => {
+    const startTime = Date.now();
 
-  const scraperCall = async () => {
-    // Tracks how much time the query took
-    timer = setInterval(() => {
-      seconds++;
-    }, 1000);
+    let cars = [];
 
     try {
-      scrapeSiteForCars(testHtml);
-      clearInterval(timer);
+      cars = scrapeSiteForCars(testHtml);
     } catch (error) {
-      console.log(error);
+      console.error("Error during scraping:", error);
+    } finally {
+      const endTime = Date.now();
+      const duration = Math.floor((endTime - startTime) / 1000); // Convert milliseconds to seconds
+      return {
+        carList: cars,
+        requestTime: duration,
+      };
     }
   };
 
-  // Scrape autoplius site.
+  const result = scrape();
 
-  await scraperCall();
-
-  return {
-    carList: cars,
-    requestTime: seconds,
-  };
+  return result;
 };
 
-export default Autoplius_scraper;
+export default AutopliusScraper;

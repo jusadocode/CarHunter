@@ -12,6 +12,7 @@ It works by pulling together multiple car market site results in one place in pa
 
 # Currently working on
 * Transitioning to periodical headless browsing (using tools like Playwright) with the idea of greatly increasing scraping speeds, and reducing reliance on ScrapingAnt.
+* Building an application backend to efficiently manage and process larger amounts of data.
 * Updating the UI/UX for better user experience.
 
 # Installation and Setup

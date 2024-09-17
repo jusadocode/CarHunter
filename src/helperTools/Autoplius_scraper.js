@@ -1,3 +1,5 @@
+// getting 307 code from scraper 09/17
+
 import cheerio from "cheerio";
 import ScrapingAntClient from "@scrapingant/scrapingant-client";
 

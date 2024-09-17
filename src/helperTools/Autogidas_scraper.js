@@ -7,44 +7,6 @@ const AutogidasScraper = async (vehicle) => {
     apiKey: import.meta.env.VITE_APP_SCRAPINGANT_API,
   });
 
-  const scrapeSiteForCars = (html) => {
-    const cars = [];
-    const $ = cheerio.load(html);
-
-    $(".article-item").each((_, element) => {
-      const $element = $(element);
-      const url = `https://autogidas.lt${$element.children("a").attr("href")}`;
-
-      let image =
-        $element.find("img").attr("data-src") ||
-        $element.find("img").attr("src");
-      if (image && !image.startsWith("http")) {
-        image = `https:${image}`; // Handle protocol-less URLs
-      }
-
-      const car = {
-        title: $element.find(".item-title").text().trim(),
-        price: $element.find(".item-price").text().trim(),
-        url,
-        stars: $element.find(".up").text().trim(),
-        image,
-        date: $element.find(".icon.param-year b").text().trim(),
-        fuelType: $element.find(".icon.param-fuel-type b").text().trim(),
-        gearBox: $element.find(".icon.param-gearbox b").text().trim(),
-        power: $element.find(".icon.param-engine b").text().trim(),
-        mileage: $element.find(".icon.param-mileage b").text().trim(),
-        bodyType: $element.find(".icon.param-body b").text().trim(),
-        city: $element.find(".icon.param-location b").text().trim(),
-      };
-
-      if (car.title) {
-        cars.push(car);
-      }
-    });
-
-    return cars;
-  };
-
   const generateUrl = (vehicle) => {
     const params = [
       vehicle.offerTypes.length > 1
@@ -94,4 +56,41 @@ const AutogidasScraper = async (vehicle) => {
   return scraperCall();
 };
 
-export default AutogidasScraper;
+const scrapeSiteForCars = (html) => {
+  const cars = [];
+  const $ = cheerio.load(html);
+
+  $(".article-item").each((_, element) => {
+    const $element = $(element);
+    const url = `https://autogidas.lt${$element.children("a").attr("href")}`;
+
+    let image =
+      $element.find("img").attr("data-src") || $element.find("img").attr("src");
+    if (image && !image.startsWith("http")) {
+      image = `https:${image}`; // Handle protocol-less URLs
+    }
+
+    const car = {
+      title: $element.find(".item-title").text().trim(),
+      price: $element.find(".item-price").text().trim(),
+      url,
+      stars: $element.find(".up").text().trim(),
+      image,
+      date: $element.find(".icon.param-year b").text().trim(),
+      fuelType: $element.find(".icon.param-fuel-type b").text().trim(),
+      gearBox: $element.find(".icon.param-gearbox b").text().trim(),
+      power: $element.find(".icon.param-engine b").text().trim(),
+      mileage: $element.find(".icon.param-mileage b").text().trim(),
+      bodyType: $element.find(".icon.param-body b").text().trim(),
+      city: $element.find(".icon.param-location b").text().trim(),
+    };
+
+    if (car.title) {
+      cars.push(car);
+    }
+  });
+
+  return cars;
+};
+
+export { AutogidasScraper, scrapeSiteForCars };

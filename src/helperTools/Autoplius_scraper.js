@@ -34,58 +34,6 @@ const AutopliusScraper = async (vehicle) => {
       .join("&")}`;
   };
 
-  const scrapeSiteForCars = (html) => {
-    const cars = [];
-    const $ = cheerio.load(html);
-
-    $(".search-list-title").each((index, element) => {
-      const searchTitle = $(element).find("h1 .js-search-title").text().trim();
-      const resultCount = $(element).find("h1 .result-count").text();
-      headline = `${searchTitle} : ${resultCount}`;
-    });
-
-    $(".announcement-item").each((index, element) => {
-      const url = $(element).attr("href");
-      let image = $(element).find(".announcement-content img").attr("data-src");
-      if (!image)
-        image = $(element).find(".announcement-content img").attr("src");
-
-      const stars = $(element)
-        .find(".announcement-badge.badge-rise")
-        .text()
-        .trim();
-      const title = $(element).find(".announcement-title").text().trim();
-      const price = $(element)
-        .find(".announcement-pricing-info strong")
-        .text()
-        .trim();
-
-      const parameters = $(element)
-        .find(".announcement-parameters span")
-        .map((_, elem) => $(elem).text().trim())
-        .get();
-
-      const car = {
-        title,
-        price,
-        url,
-        stars,
-        image,
-        date: parameters[0],
-        fuelType: parameters[2],
-        bodyType: parameters[1],
-        gearBox: parameters[3],
-        power: parameters[4],
-        mileage: parameters[5],
-        city: parameters[6],
-      };
-
-      cars.push(car);
-    });
-
-    return cars;
-  };
-
   const url = generateUrl(vehicle);
   console.log(url);
 
@@ -113,4 +61,56 @@ const AutopliusScraper = async (vehicle) => {
   return result;
 };
 
-export default AutopliusScraper;
+const scrapeSiteForCars = (html) => {
+  const cars = [];
+  const $ = cheerio.load(html);
+
+  $(".search-list-title").each((index, element) => {
+    const searchTitle = $(element).find("h1 .js-search-title").text().trim();
+    const resultCount = $(element).find("h1 .result-count").text();
+    headline = `${searchTitle} : ${resultCount}`;
+  });
+
+  $(".announcement-item").each((index, element) => {
+    const url = $(element).attr("href");
+    let image = $(element).find(".announcement-content img").attr("data-src");
+    if (!image)
+      image = $(element).find(".announcement-content img").attr("src");
+
+    const stars = $(element)
+      .find(".announcement-badge.badge-rise")
+      .text()
+      .trim();
+    const title = $(element).find(".announcement-title").text().trim();
+    const price = $(element)
+      .find(".announcement-pricing-info strong")
+      .text()
+      .trim();
+
+    const parameters = $(element)
+      .find(".announcement-parameters span")
+      .map((_, elem) => $(elem).text().trim())
+      .get();
+
+    const car = {
+      title,
+      price,
+      url,
+      stars,
+      image,
+      date: parameters[0],
+      fuelType: parameters[2],
+      bodyType: parameters[1],
+      gearBox: parameters[3],
+      power: parameters[4],
+      mileage: parameters[5],
+      city: parameters[6],
+    };
+
+    cars.push(car);
+  });
+
+  return cars;
+};
+
+export { AutopliusScraper, scrapeSiteForCars };

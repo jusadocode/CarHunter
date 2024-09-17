@@ -1,6 +1,7 @@
 const playwright = require("playwright");
 const cheerio = require("cheerio");
 const fs = require("fs");
+import { scrapeSiteForCars } from "../src/helperTools/Autoplius_scraper";
 
 console.log("starting..");
 console.time("Execution Time");

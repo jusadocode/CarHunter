@@ -1,6 +1,5 @@
 import cheerio from "cheerio";
 import ScrapingAntClient from "@scrapingant/scrapingant-client";
-import testHtml from "./aplus_structure";
 
 const AutopliusScraper = async (vehicle) => {
   let headline = "Automobilių nerasta";

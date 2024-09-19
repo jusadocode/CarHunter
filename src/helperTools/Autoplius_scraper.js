@@ -4,8 +4,6 @@ import cheerio from "cheerio";
 import ScrapingAntClient from "@scrapingant/scrapingant-client";
 
 const AutopliusScraper = async (vehicle) => {
-  let headline = "Automobilių nerasta";
-
   const client = new ScrapingAntClient({
     apiKey: import.meta.env.VITE_APP_SCRAPINGANT_API,
   });
@@ -61,6 +59,7 @@ const AutopliusScraper = async (vehicle) => {
   };
 
   const url = generateUrl(vehicle);
+  console.log(url);
 
   const result = scrape(url);
 
@@ -74,7 +73,6 @@ const scrapeSiteForCars = (html) => {
   $(".search-list-title").each((index, element) => {
     const searchTitle = $(element).find("h1 .js-search-title").text().trim();
     const resultCount = $(element).find("h1 .result-count").text();
-    headline = `${searchTitle} : ${resultCount}`;
   });
 
   $(".announcement-item").each((index, element) => {

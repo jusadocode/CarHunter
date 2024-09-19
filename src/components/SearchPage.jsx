@@ -26,6 +26,7 @@ import { LoadingButton } from "@mui/lab";
 import { AutopliusScraper } from "../helperTools/autoplius_scraper";
 import { AutogidasScraper } from "../helperTools/autogidas_scraper";
 import useStyles from "../Styles";
+import { getAllCars } from "../services/carService";
 
 const SearchPage = () => {
   let searchTimer;
@@ -288,9 +289,8 @@ const SearchPage = () => {
 
     //const results = await delay()
 
-    const autopliusResults = await AutopliusScraper(car);
-
-    const autogidasResults = await AutogidasScraper(car);
+    const autopliusResults = await getAllCars();
+    const autogidasResults = await getAllCars();
 
     if (autogidasResults) {
       // console.log(autopliusResults.carList)
@@ -309,12 +309,12 @@ const SearchPage = () => {
       setStatus("cooldown");
 
       if (autopliusResults) {
-        setAutopliusCars(autopliusResults.carList);
+        setAutopliusCars(autopliusResults);
         setAutopliusTime(autopliusResults.requestTime);
       }
 
       if (autogidasResults) {
-        setAutogidasCars(autogidasResults.carList);
+        setAutogidasCars(autogidasResults);
         setAutogidasTime(autogidasResults.requestTime);
       }
     }
@@ -725,91 +725,88 @@ const SearchPage = () => {
           ) : (
             ""
           )}
-          {
-            // research hover over
-            autopliusCars.length > 0
-              ? autopliusCars.map((car, index) => (
-                  <Card key={index} className="card">
-                    <CardActionArea href={car.url} target="_blank">
-                      <CardContent>
-                        <CardMedia
-                          sx={{
-                            maxHeight: 300,
-                            maxWidth: 255,
-                            border:
-                              car.stars >= 10
-                                ? "5px solid yellow"
-                                : "5px solid grey",
-                          }}
-                          component="img"
-                          src={car.image}
-                          alt={car.name}
-                        />
-                        <Typography
-                          sx={{ fontSize: 14 }}
-                          color="text.secondary"
-                          gutterBottom
-                        >
-                          {car.title}
-                        </Typography>
-                        <Typography variant="h5" component="div">
-                          {car.price}
-                        </Typography>
-                        <Typography variant="body2">
-                          ⭐{car.stars}
-                          <br />
-                        </Typography>
-                        <Typography className={useStyles.weee}>
-                          {car.date}
-                        </Typography>
-                        <Typography
-                          sx={{ fontSize: 14 }}
-                          color="text.secondary"
-                          gutterBottom
-                        >
-                          {car.fuelType}
-                        </Typography>
-                        <Typography
-                          sx={{ fontSize: 14 }}
-                          color="text.secondary"
-                          gutterBottom
-                        >
-                          {car.bodyType}
-                        </Typography>
-                        <Typography
-                          sx={{ fontSize: 14 }}
-                          color="text.secondary"
-                          gutterBottom
-                        >
-                          {car.gearBox}
-                        </Typography>
-                        <Typography
-                          sx={{ fontSize: 14 }}
-                          color="text.secondary"
-                          gutterBottom
-                        >
-                          {car.power}
-                        </Typography>
-                        <Typography
-                          sx={{ fontSize: 14 }}
-                          color="text.secondary"
-                          gutterBottom
-                        >
-                          {car.mileage}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                    <Button
-                      size="small"
-                      href={`https://www.google.com/maps/search/?api=1&query=${car.city}`}
-                      target="_blank"
-                    >
-                      {car.city}
-                    </Button>
-                  </Card>
-                ))
-              : []
-          }
+          {autopliusCars.length > 0
+            ? autopliusCars.map((car, index) => (
+                <Card key={index} className="card">
+                  <CardActionArea href={car.url} target="_blank">
+                    <CardContent>
+                      <CardMedia
+                        sx={{
+                          maxHeight: 300,
+                          maxWidth: 255,
+                          border:
+                            car.stars >= 10
+                              ? "5px solid yellow"
+                              : "5px solid grey",
+                        }}
+                        component="img"
+                        src={car.image}
+                        alt={car.name}
+                      />
+                      <Typography
+                        sx={{ fontSize: 14 }}
+                        color="text.secondary"
+                        gutterBottom
+                      >
+                        {car.title}
+                      </Typography>
+                      <Typography variant="h5" component="div">
+                        {car.price}
+                      </Typography>
+                      <Typography variant="body2">
+                        ⭐{car.stars}
+                        <br />
+                      </Typography>
+                      <Typography className={useStyles.weee}>
+                        {car.date}
+                      </Typography>
+                      <Typography
+                        sx={{ fontSize: 14 }}
+                        color="text.secondary"
+                        gutterBottom
+                      >
+                        {car.fuelType}
+                      </Typography>
+                      <Typography
+                        sx={{ fontSize: 14 }}
+                        color="text.secondary"
+                        gutterBottom
+                      >
+                        {car.bodyType}
+                      </Typography>
+                      <Typography
+                        sx={{ fontSize: 14 }}
+                        color="text.secondary"
+                        gutterBottom
+                      >
+                        {car.gearBox}
+                      </Typography>
+                      <Typography
+                        sx={{ fontSize: 14 }}
+                        color="text.secondary"
+                        gutterBottom
+                      >
+                        {car.power}
+                      </Typography>
+                      <Typography
+                        sx={{ fontSize: 14 }}
+                        color="text.secondary"
+                        gutterBottom
+                      >
+                        {car.mileage}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <Button
+                    size="small"
+                    href={`https://www.google.com/maps/search/?api=1&query=${car.city}`}
+                    target="_blank"
+                  >
+                    {car.city}
+                  </Button>
+                </Card>
+              ))
+            : []}
         </div>
         <div>
           {autogidasCars.length > 0 ? (

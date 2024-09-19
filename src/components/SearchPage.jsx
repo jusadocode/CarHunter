@@ -23,8 +23,8 @@ import {
 } from "@mui/material";
 import "../App.css";
 import { LoadingButton } from "@mui/lab";
-import Autoplius_scraper from "../helperTools/autoplius_scraper";
-import Autogidas_scraper from "../helperTools/autogidas_scraper";
+import { AutopliusScraper } from "../helperTools/autoplius_scraper";
+import { AutogidasScraper } from "../helperTools/autogidas_scraper";
 import useStyles from "../Styles";
 
 const SearchPage = () => {
@@ -288,9 +288,9 @@ const SearchPage = () => {
 
     //const results = await delay()
 
-    const autopliusResults = await Autoplius_scraper(car);
+    const autopliusResults = await AutopliusScraper(car);
 
-    const autogidasResults = await Autogidas_scraper(car);
+    const autogidasResults = await AutogidasScraper(car);
 
     if (autogidasResults) {
       // console.log(autopliusResults.carList)

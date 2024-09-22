@@ -2,11 +2,7 @@ import * as fs from "node:fs/promises";
 import axios from "axios";
 import https from "https";
 
-const BASE_URL = "http://localhost:7224";
-
-const agent = new https.Agent({
-  rejectUnauthorized: false,
-});
+const BASE_URL = "https://localhost:7224";
 
 const getAllAutopliusCars = async () => {
   try {
@@ -19,18 +15,16 @@ const getAllAutopliusCars = async () => {
 };
 
 const saveAutopliusCars = async (cars) => {
-  const carsToSave = cars.slice(0, 5);
   try {
-    const response = await axios.post(
-      `${BASE_URL}/api/AutopliusCars`,
-      carsToSave,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        httpsAgent: agent,
-      }
-    );
+    const response = await axios.post(`${BASE_URL}/api/AutopliusCars`, cars, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      timeout: 15000,
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false,
+      }),
+    });
     console.log(response.data);
   } catch (error) {
     console.error("Error saving cars:", error);
@@ -43,6 +37,10 @@ const saveAutogidasCars = async (cars) => {
       headers: {
         "Content-Type": "application/json",
       },
+      timeout: 15000,
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false,
+      }),
     });
     console.log(response.data);
   } catch (error) {

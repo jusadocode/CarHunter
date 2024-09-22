@@ -49,7 +49,7 @@ console.time("Execution Time");
 
   // Write all car data to a JSON file
 
-  saveAutogidasCars(allCars);
+  await saveAutogidasCars(allCars);
 
   await browser.close();
   console.timeEnd("Execution Time");

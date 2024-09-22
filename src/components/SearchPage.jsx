@@ -29,6 +29,7 @@ import useStyles from "../Styles";
 import {
   getAllAutogidasCars,
   getAllAutopliusCars,
+  saveAutopliusCars,
 } from "../services/carService";
 
 const SearchPage = () => {

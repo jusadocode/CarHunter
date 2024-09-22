@@ -1,9 +1,8 @@
 const playwright = require("playwright");
-const cheerio = require("cheerio");
 const fs = require("fs");
-import { scrapeSiteForCars } from "../src/helperTools/Autoplius_scraper";
+const { scrapeSiteForCars } = require("../src/helperTools/Autogidas_scraper");
 
-console.log("starting..");
+console.log("starting autogidas scraping..");
 console.time("Execution Time");
 
 (async () => {
@@ -11,13 +10,13 @@ console.time("Execution Time");
   const context = await browser.newContext();
   const page = await context.newPage();
 
-  const totalPages = 30;
+  const totalPages = 20;
   const minDelay = 2000;
   const maxDelay = 3500;
   const allCars = [];
 
   for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
-    const url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?qt=&page_nr=${pageNumber}`;
+    const url = `https://autogidas.lt/skelbimai/automobiliai/?f_1[0]=&f_model_14[0]=&f_50=kaina_asc&page=${pageNumber}`;
 
     try {
       console.log(`Scraping page ${pageNumber}...`);
@@ -49,7 +48,7 @@ console.time("Execution Time");
 
   // Write all car data to a JSON file
   fs.writeFile(
-    "carsAutoplius.json",
+    "autogidas-cars.json",
     JSON.stringify(allCars, null, 2),
     (err) => {
       if (err) throw err;

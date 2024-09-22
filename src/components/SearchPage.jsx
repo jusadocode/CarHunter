@@ -26,7 +26,10 @@ import { LoadingButton } from "@mui/lab";
 import { AutopliusScraper } from "../helperTools/autoplius_scraper";
 import { AutogidasScraper } from "../helperTools/autogidas_scraper";
 import useStyles from "../Styles";
-import { getAllCars } from "../services/carService";
+import {
+  getAllAutogidasCars,
+  getAllAutopliusCars,
+} from "../services/carService";
 
 const SearchPage = () => {
   let searchTimer;
@@ -274,23 +277,8 @@ const SearchPage = () => {
       textField: text,
     };
 
-    // const timeout = async (ms) => {
-
-    //     return new Promise(resolve => setTimeout(resolve, ms));
-    // }
-    // const delay = async () => {
-
-    //     let text = ''
-    //     await timeout(5000)
-    //     text += 'a'
-
-    //     return text
-    // }
-
-    //const results = await delay()
-
-    const autopliusResults = await getAllCars();
-    const autogidasResults = await getAllCars();
+    const autopliusResults = await getAllAutopliusCars();
+    const autogidasResults = await getAllAutogidasCars();
 
     if (autogidasResults) {
       // console.log(autopliusResults.carList)

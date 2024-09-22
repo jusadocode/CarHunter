@@ -1,5 +1,4 @@
 import playwright from "playwright";
-import fs from "fs";
 import { scrapeSiteForCars } from "../src/helperTools/Autoplius_scraper.js";
 import { saveAutopliusCars } from "../src/services/carService.js";
 

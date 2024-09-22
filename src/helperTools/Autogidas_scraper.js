@@ -87,7 +87,7 @@ const scrapeSiteForCars = (html) => {
       date: $element.find(".icon.param-year b").text().trim(),
       fuelType: $element.find(".icon.param-fuel-type b").text().trim(),
       gearBox: $element.find(".icon.param-gearbox b").text().trim(),
-      power: $element.find(".icon.param-engine b").text().trim(),
+      power: $element.find(".icon.param-engine b").text().trim() || "",
       mileage: $element.find(".icon.param-mileage b").text().trim(),
       bodyType: $element.find(".icon.param-body b").text().trim(),
       city: $element.find(".icon.param-location b").text().trim(),

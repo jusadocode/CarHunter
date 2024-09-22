@@ -1,6 +1,7 @@
-const playwright = require("playwright");
-const fs = require("fs");
-const { scrapeSiteForCars } = require("../src/helperTools/Autogidas_scraper");
+import playwright from "playwright";
+import fs from "fs";
+import { scrapeSiteForCars } from "../src/helperTools/Autogidas_scraper.js";
+import { saveAutogidasCars } from "../src/services/carService.js";
 
 console.log("starting autogidas scraping..");
 console.time("Execution Time");
@@ -47,14 +48,8 @@ console.time("Execution Time");
   }
 
   // Write all car data to a JSON file
-  fs.writeFile(
-    "autogidas-cars.json",
-    JSON.stringify(allCars, null, 2),
-    (err) => {
-      if (err) throw err;
-      console.log("All data has been written to file");
-    }
-  );
+
+  saveAutogidasCars(allCars);
 
   await browser.close();
   console.timeEnd("Execution Time");

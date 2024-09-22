@@ -1,6 +1,7 @@
-const playwright = require("playwright");
-const fs = require("fs");
-const { scrapeSiteForCars } = require("../src/helperTools/Autoplius_scraper");
+import playwright from "playwright";
+import fs from "fs";
+import { scrapeSiteForCars } from "../src/helperTools/Autoplius_scraper.js";
+import { saveAutopliusCars } from "../src/services/carService.js";
 
 console.log("starting autoplius scraping..");
 console.time("Execution Time");
@@ -47,14 +48,8 @@ console.time("Execution Time");
   }
 
   // Write all car data to a JSON file
-  fs.writeFile(
-    "autoplius-cars.json",
-    JSON.stringify(allCars, null, 2),
-    (err) => {
-      if (err) throw err;
-      console.log("All data has been written to file");
-    }
-  );
+
+  await saveAutopliusCars(allCars);
 
   await browser.close();
   console.timeEnd("Execution Time");

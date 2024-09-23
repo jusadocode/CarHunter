@@ -32,7 +32,7 @@ function App() {
     <div className="App">
       <Header />
       <SearchPage />
-      <div style={{ padding: "2rem" }}>
+      <div style={{ paddingBlockEnd: "2rem" }}>
         <img style={{ margin: "2rem" }} src={movingPic} alt="gif" />
       </div>
       <Footer />

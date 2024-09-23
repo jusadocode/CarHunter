@@ -21,7 +21,7 @@ const Header = () => {
       <Typography
         variant="h6"
         component="h6"
-        color={getRandomColor()}
+        color={"gray"}
         padding="10px"
         style={{ fontStyle: "italic" }}
       >

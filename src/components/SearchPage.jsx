@@ -4,6 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import sportsCar from "/sports-car.png";
+import CarCard from "./CarCard";
 import {
   FormControlLabel,
   Checkbox,
@@ -25,7 +26,6 @@ import "../App.css";
 import { LoadingButton } from "@mui/lab";
 import { AutopliusScraper } from "../helperTools/autoplius_scraper";
 import { AutogidasScraper } from "../helperTools/autogidas_scraper";
-import useStyles from "../Styles";
 import {
   getAllAutogidasCars,
   getAllAutopliusCars,
@@ -695,11 +695,13 @@ const SearchPage = () => {
         </Link>
       </p>
 
-      <Paper elevation={0} sx={{ m: 4, marginInline: 50, color: "green" }}>
-        {autopliusTime !== 0
-          ? `Info gathered in ${autopliusTime}ms and ${autogidasTime}ms accordingly.`
-          : ""}
-      </Paper>
+      {autopliusTime !== 0 ? (
+        <Paper elevation={0} sx={{ m: 4, marginInline: 50, color: "green" }}>
+          {`Info gathered in ${autopliusTime}ms and ${autogidasTime}ms accordingly.`}
+        </Paper>
+      ) : (
+        ""
+      )}
 
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div>
@@ -716,84 +718,7 @@ const SearchPage = () => {
           )}
           {autopliusCars.length > 0
             ? autopliusCars.map((car, index) => (
-                <Card key={index} className="card">
-                  <CardActionArea href={car.url} target="_blank">
-                    <CardContent>
-                      <CardMedia
-                        sx={{
-                          maxHeight: 300,
-                          maxWidth: 255,
-                          border:
-                            car.stars >= 10
-                              ? "5px solid yellow"
-                              : "5px solid grey",
-                        }}
-                        component="img"
-                        src={car.image}
-                        alt={car.name}
-                      />
-                      <Typography
-                        sx={{ fontSize: 14 }}
-                        color="text.secondary"
-                        gutterBottom
-                      >
-                        {car.title}
-                      </Typography>
-                      <Typography variant="h5" component="div">
-                        {car.price}
-                      </Typography>
-                      <Typography variant="body2">
-                        ⭐{car.stars}
-                        <br />
-                      </Typography>
-                      <Typography className={useStyles.weee}>
-                        {car.date}
-                      </Typography>
-                      <Typography
-                        sx={{ fontSize: 14 }}
-                        color="text.secondary"
-                        gutterBottom
-                      >
-                        {car.fuelType}
-                      </Typography>
-                      <Typography
-                        sx={{ fontSize: 14 }}
-                        color="text.secondary"
-                        gutterBottom
-                      >
-                        {car.bodyType}
-                      </Typography>
-                      <Typography
-                        sx={{ fontSize: 14 }}
-                        color="text.secondary"
-                        gutterBottom
-                      >
-                        {car.gearBox}
-                      </Typography>
-                      <Typography
-                        sx={{ fontSize: 14 }}
-                        color="text.secondary"
-                        gutterBottom
-                      >
-                        {car.power}
-                      </Typography>
-                      <Typography
-                        sx={{ fontSize: 14 }}
-                        color="text.secondary"
-                        gutterBottom
-                      >
-                        {car.mileage}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <Button
-                    size="small"
-                    href={`https://www.google.com/maps/search/?api=1&query=${car.city}`}
-                    target="_blank"
-                  >
-                    {car.city}
-                  </Button>
-                </Card>
+                <CarCard key={index} car={car} />
               ))
             : []}
         </div>
@@ -814,93 +739,7 @@ const SearchPage = () => {
             // research hover over
             autogidasCars.length > 0
               ? autogidasCars.map((car, index) => (
-                  <Card key={index} className="card">
-                    <CardActionArea href={car.url} target="_blank">
-                      <CardContent>
-                        <CardMedia
-                          sx={{
-                            maxHeight: 300,
-                            maxWidth: 255,
-                            border:
-                              car.stars >= 10
-                                ? "5px solid yellow"
-                                : "5px solid grey",
-                          }}
-                          component="img"
-                          src={car.image || sportsCar}
-                          alt={car.name}
-                          // For instances where the image isnt available due to lazy load
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = sportsCar;
-                          }}
-                        />
-                        <Typography
-                          sx={{ fontSize: 14 }}
-                          color="text.secondary"
-                          gutterBottom
-                        >
-                          {car.title}
-                        </Typography>
-                        <Typography variant="h5" component="div">
-                          {car.price}
-                        </Typography>
-                        <Typography variant="body2">
-                          ⭐{car.stars}
-                          <br />
-                        </Typography>
-                        <Typography className="typography-info">
-                          {car.date}
-                        </Typography>
-                        <Typography
-                          sx={{ fontSize: 14 }}
-                          color="text.secondary"
-                          gutterBottom
-                        >
-                          {car.fuelType}
-                        </Typography>
-                        <Typography
-                          sx={{ fontSize: 14 }}
-                          color="text.secondary"
-                          gutterBottom
-                        >
-                          {car.bodyType}
-                        </Typography>
-                        <Typography
-                          sx={{ fontSize: 14 }}
-                          color="text.secondary"
-                          gutterBottom
-                        >
-                          {car.gearBox}
-                        </Typography>
-                        <Typography
-                          sx={{ fontSize: 14 }}
-                          color="text.secondary"
-                          gutterBottom
-                        >
-                          {car.power}
-                        </Typography>
-                        <Typography
-                          sx={{ fontSize: 14 }}
-                          color="text.secondary"
-                          gutterBottom
-                        >
-                          {car.mileage}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                    <Button
-                      size="small"
-                      href={
-                        car.city === ""
-                          ? car.city
-                          : `https://www.google.com/maps/search/?api=1&query=${car.city}`
-                      }
-                      target="_blank"
-                    >
-                      {car.city}
-                    </Button>
-                  </Card>
+                  <CarCard key={index} car={car} />
                 ))
               : []
           }

@@ -11,11 +11,12 @@ console.time("Execution Time");
   const page = await context.newPage();
 
   const totalPages = 20;
+  const initialPage = 1;
   const minDelay = 2000;
   const maxDelay = 3500;
   const allCars = [];
 
-  for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
+  for (let pageNumber = initialPage; pageNumber <= totalPages; pageNumber++) {
     const url = `https://autogidas.lt/skelbimai/automobiliai/?f_1[0]=&f_model_14[0]=&f_50=kaina_asc&page=${pageNumber}`;
 
     try {

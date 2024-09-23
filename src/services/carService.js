@@ -2,11 +2,21 @@ import * as fs from "node:fs/promises";
 import axios from "axios";
 import https from "https";
 
-const BASE_URL = "https://localhost:7224";
+const BASE_URL = "https://localhost:7224"; // Using this for the script which isn't run via vite instance
 
 const getAllAutopliusCars = async () => {
   try {
     const response = await axios.get(`api/AutopliusCars`);
+    return response.data.slice(0, 20);
+  } catch (error) {
+    console.error("Error fetching cars:", error);
+    return [];
+  }
+};
+
+const getAllAutogidasCars = async () => {
+  try {
+    const response = await axios.get(`api/AutogidasCars`);
     return response.data.slice(0, 20);
   } catch (error) {
     console.error("Error fetching cars:", error);
@@ -25,9 +35,9 @@ const saveAutopliusCars = async (cars) => {
         rejectUnauthorized: false,
       }),
     });
-    console.log(response.data);
   } catch (error) {
     console.error("Error saving cars:", error);
+    saveCarsToFile(cars, "autoplius-cars.json");
   }
 };
 
@@ -42,46 +52,52 @@ const saveAutogidasCars = async (cars) => {
         rejectUnauthorized: false,
       }),
     });
-    console.log(response.data);
   } catch (error) {
     console.error("Error saving cars:", error);
+    saveCarsToFile(cars, "autogidas-cars.json");
   }
 };
 
-const saveAutopliusCarsFromFile = async (filePath) => {
+const readCarsFromFile = async (fileName) => {
   try {
-    // Read the JSON file
-    const data = await fs.readFile(filePath, "utf-8");
-    const cars = JSON.parse(data); // Parse the JSON string into an object/array
-
-    const response = await axios.post(`${BASE_URL}/api/AutopliusCars`, cars, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    console.log(response.data);
-    return response.data;
+    const fileContent = await fs.readFile(fileName, "utf-8");
+    const cars = JSON.parse(fileContent);
+    return cars;
   } catch (error) {
-    console.error("Error saving cars:", error);
-    return [];
+    console.error("Error reading cars from file:", error);
+    return null;
   }
 };
 
-const getAllAutogidasCars = async () => {
+const readFromFileAndPostToDatabase = async (fileName) => {
+  const cars = await readCarsFromFile(fileName);
+  if (cars) {
+    await saveAutopliusCars(cars); // Post the data to the database API
+  } else {
+    console.error("No cars to post. Could not read the file.");
+  }
+};
+
+const saveCarsToFile = async (cars, filePath) => {
   try {
-    const response = await axios.get(`api/AutogidasCars`);
-    return response.data.slice(0, 20);
+    // Convert cars object/array to JSON string format
+    const data = JSON.stringify(cars, null, 2); // null and 2 used to prettify JSON
+
+    // Write the data to a file
+    await fs.writeFile(filePath, data);
+
+    console.log(`Cars successfully saved to ${filePath}`);
   } catch (error) {
-    console.error("Error fetching cars:", error);
-    return [];
+    console.error("Error writing cars to file:", error);
   }
 };
+
+readFromFileAndPostToDatabase("autoplius-cars.json");
 
 export {
   getAllAutogidasCars,
   getAllAutopliusCars,
   saveAutopliusCars,
   saveAutogidasCars,
-  saveAutopliusCarsFromFile,
+  saveCarsToFile,
 };

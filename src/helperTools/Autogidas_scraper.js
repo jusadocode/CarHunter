@@ -79,18 +79,18 @@ const scrapeSiteForCars = (html) => {
     }
 
     const car = {
-      title: $element.find(".item-title").text().trim(),
-      price: $element.find(".item-price").text().trim(),
-      url,
-      stars: $element.find(".up").text().trim(),
-      image,
-      date: $element.find(".icon.param-year b").text().trim(),
-      fuelType: $element.find(".icon.param-fuel-type b").text().trim(),
-      gearBox: $element.find(".icon.param-gearbox b").text().trim(),
-      power: $element.find(".icon.param-engine b").text().trim() || "",
-      mileage: $element.find(".icon.param-mileage b").text().trim(),
-      bodyType: $element.find(".icon.param-body b").text().trim(),
-      city: $element.find(".icon.param-location b").text().trim(),
+      title: $element.find(".item-title").text().trim() || "",
+      price: $element.find(".item-price").text().trim() || "",
+      url: url || "",
+      stars: $element.find(".up").text().trim() || "",
+      image: image || "",
+      date: $element.find(".icon.param-year b").text().trim() || "",
+      fuelType: $element.find(".icon.param-fuel-type b").text().trim() || "",
+      gearBox: $element.find(".icon.param-gearbox b").text().trim() || "",
+      power_info: $element.find(".icon.param-engine b").text().trim() || "",
+      mileage: $element.find(".icon.param-mileage b").text().trim() || "",
+      bodyType: $element.find(".icon.param-body b").text().trim() || "",
+      city: $element.find(".icon.param-location b").text().trim() || "",
     };
 
     if (car.title) {

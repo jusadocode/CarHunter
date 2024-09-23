@@ -1,6 +1,9 @@
 import playwright from "playwright";
 import { scrapeSiteForCars } from "../src/helperTools/Autoplius_scraper.js";
-import { saveAutopliusCars } from "../src/services/carService.js";
+import {
+  saveAutopliusCars,
+  saveCarsToFile,
+} from "../src/services/carService.js";
 
 console.log("starting autoplius scraping..");
 console.time("Execution Time");
@@ -11,11 +14,12 @@ console.time("Execution Time");
   const page = await context.newPage();
 
   const totalPages = 20;
+  const initialPage = 1;
   const minDelay = 2000;
   const maxDelay = 3500;
   const allCars = [];
 
-  for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
+  for (let pageNumber = initialPage; pageNumber <= totalPages; pageNumber++) {
     const url = `https://autoplius.lt/skelbimai/naudoti-automobiliai?qt=&page_nr=${pageNumber}`;
 
     try {

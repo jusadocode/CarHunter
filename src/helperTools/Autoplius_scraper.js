@@ -1,5 +1,3 @@
-// getting 307 code from scraper 09/17
-
 import cheerio from "cheerio";
 import ScrapingAntClient from "@scrapingant/scrapingant-client";
 
@@ -70,26 +68,21 @@ const scrapeSiteForCars = (html) => {
   const cars = [];
   const $ = cheerio.load(html);
 
-  $(".search-list-title").each((index, element) => {
-    const searchTitle = $(element).find("h1 .js-search-title").text().trim();
-    const resultCount = $(element).find("h1 .result-count").text();
-  });
-
   $(".announcement-item").each((index, element) => {
-    const url = $(element).attr("href");
-    let image = $(element).find(".announcement-content img").attr("data-src");
-    if (!image)
-      image = $(element).find(".announcement-content img").attr("src");
+    const url = $(element).attr("href") || "";
 
-    const stars = $(element)
-      .find(".announcement-badge.badge-rise")
-      .text()
-      .trim();
-    const title = $(element).find(".announcement-title").text().trim();
-    const price = $(element)
-      .find(".announcement-pricing-info strong")
-      .text()
-      .trim();
+    let image =
+      $(element).find(".announcement-content img").attr("data-src") ||
+      $(element).find(".announcement-content img").attr("src") ||
+      "";
+
+    const stars =
+      $(element).find(".announcement-badge.badge-rise").text().trim() || "";
+
+    const title = $(element).find(".announcement-title").text().trim() || "";
+
+    const price =
+      $(element).find(".announcement-pricing-info strong").text().trim() || "";
 
     const parameters = $(element)
       .find(".announcement-parameters span")
@@ -102,13 +95,13 @@ const scrapeSiteForCars = (html) => {
       url,
       stars,
       image,
-      date: parameters[0],
-      fuelType: parameters[2],
-      bodyType: parameters[1],
-      gearBox: parameters[3],
-      power: parameters[4],
-      mileage: parameters[5],
-      city: parameters[6],
+      date: parameters[0] || "",
+      bodyType: parameters[1] || "",
+      fuelType: parameters[2] || "",
+      gearBox: parameters[3] || "",
+      power_info: parameters[4] || "",
+      mileage: parameters[5] || "",
+      city: parameters[6] || "",
     };
 
     cars.push(car);

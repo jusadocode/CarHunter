@@ -1,11 +1,6 @@
 import cheerio from "cheerio";
-import ScrapingAntClient from "@scrapingant/scrapingant-client";
 
 const AutopliusScraper = async (vehicle) => {
-  const client = new ScrapingAntClient({
-    apiKey: import.meta.env.VITE_APP_SCRAPINGANT_API,
-  });
-
   const generateUrl = (vehicle) => {
     const params = [
       vehicle.offerTypes.length > 1
@@ -29,31 +24,6 @@ const AutopliusScraper = async (vehicle) => {
     return `https://autoplius.lt/skelbimai/naudoti-automobiliai?${params
       .filter(Boolean)
       .join("&")}`;
-  };
-
-  const scrape = async (url) => {
-    const startTime = Date.now(); // Start the timer
-    let cars = [];
-
-    try {
-      const response = await client.scrape(url, {
-        proxy_country: "PL", // Use Poland as proxy country
-        wait_for_selector: ".article-item",
-        proxy_type: "residential",
-      });
-
-      cars = scrapeSiteForCars(response.content);
-    } catch (error) {
-      console.error("Error during scraping:", error);
-    } finally {
-      const endTime = Date.now(); // End the timer
-      const duration = Math.floor((endTime - startTime) / 1000); // Calculate the time in seconds
-
-      return {
-        carList: cars,
-        requestTime: duration,
-      };
-    }
   };
 
   const url = generateUrl(vehicle);

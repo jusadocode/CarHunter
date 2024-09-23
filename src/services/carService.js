@@ -92,8 +92,6 @@ const saveCarsToFile = async (cars, filePath) => {
   }
 };
 
-readFromFileAndPostToDatabase("autoplius-cars.json");
-
 export {
   getAllAutogidasCars,
   getAllAutopliusCars,

@@ -5,22 +5,33 @@ import https from "https";
 const BASE_URL = "https://localhost:7224"; // Using this for the script which isn't run via vite instance
 
 const getAllAutopliusCars = async () => {
+  const startTime = Date.now();
   try {
     const response = await axios.get(`api/AutopliusCars`);
-    return response.data.slice(0, 20);
+    const responseTime = Date.now() - startTime;
+
+    return {
+      cars: response.data.slice(0, 20),
+      responseTime,
+    };
   } catch (error) {
     console.error("Error fetching cars:", error);
-    return [];
+    return { cars: [], responseTime: Date.now() - startTime };
   }
 };
 
 const getAllAutogidasCars = async () => {
+  const startTime = Date.now();
   try {
     const response = await axios.get(`api/AutogidasCars`);
-    return response.data.slice(0, 20);
+    const responseTime = Date.now() - startTime;
+    return {
+      cars: response.data.slice(0, 20),
+      responseTime,
+    };
   } catch (error) {
     console.error("Error fetching cars:", error);
-    return [];
+    return { cars: [], responseTime: Date.now() - startTime };
   }
 };
 

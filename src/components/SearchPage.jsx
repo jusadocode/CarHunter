@@ -298,13 +298,13 @@ const SearchPage = () => {
       setStatus("cooldown");
 
       if (autopliusResults) {
-        setAutopliusCars(autopliusResults);
-        setAutopliusTime(autopliusResults.requestTime);
+        setAutopliusCars(autopliusResults.cars);
+        setAutopliusTime(autopliusResults.responseTime);
       }
 
       if (autogidasResults) {
-        setAutogidasCars(autogidasResults);
-        setAutogidasTime(autogidasResults.requestTime);
+        setAutogidasCars(autogidasResults.cars);
+        setAutogidasTime(autogidasResults.responseTime);
       }
     }
 
@@ -697,7 +697,7 @@ const SearchPage = () => {
 
       <Paper elevation={0} sx={{ m: 4, marginInline: 50, color: "green" }}>
         {autopliusTime !== 0
-          ? `Info gathered in ${autopliusTime} and ${autogidasTime} secs accordingly.`
+          ? `Info gathered in ${autopliusTime}ms and ${autogidasTime}ms accordingly.`
           : ""}
       </Paper>
 

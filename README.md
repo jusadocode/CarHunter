@@ -40,7 +40,7 @@ After the search operation, there is a small cooldown on the search initiation t
 
 After the process finishes, you can see the results portrayed in parallel:
 
-![image](https://github.com/user-attachments/assets/3571f5e3-d19f-4353-9d92-ecda60515403)
+![image](https://github.com/user-attachments/assets/116f9d5a-7be8-4c71-a628-3246d9303075)
 
 
 for now the info is gathered using autoplius and autogidas results.
